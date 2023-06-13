@@ -11,6 +11,10 @@ public class DestructableObject : MonoBehaviour
     [SerializeField]
     private int hp = 3;
 
+    //shield에 대항하는 수치
+    [SerializeField]
+    private float resistence = 3.0f;
+
     void Start()
     {
         _destructableObject = this.GetComponent<DestructableObject>();
@@ -26,9 +30,20 @@ public class DestructableObject : MonoBehaviour
     }
 
     //쉴드로 인해 튕겨져 나감
-    public void BounceOff(float shieldForce) {
+    public void BounceOff(float shieldForce, out bool isCalled) {
+        
         Debug.Log("BounceOff called");
-        _rb.velocity = new Vector2(_rb.velocity.x, shieldForce);
+        
+        isCalled = true;
+
+        float bounceForce = shieldForce - resistence;
+        if(bounceForce < 1.0f) bounceForce = 1.0f;
+        
+        Debug.Log("bounceForce: " + bounceForce);
+
+        _rb.velocity = new Vector2(_rb.velocity.x, bounceForce);
+
+
     }
 
     private void GetDestroyed() {
