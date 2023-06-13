@@ -6,26 +6,23 @@ public class DashHitBox : MonoBehaviour
 {
     private PlayerController playerController;
     private DestructableObject attackTarget;
+    private int currentDashForceLeft;
 
-    public DestructableObject AttackTarget{
-        get{return attackTarget;}
-        set{attackTarget = value;}
-    }
-
-    private void Start() {
-        playerController = this.GetComponentInParent<PlayerController>();
+    private void Awake() {
+        playerController = GameObject.FindObjectOfType<PlayerController>();
+        currentDashForceLeft = playerController.DashForce;
+        Debug.Log("currentDashForceLeft" + currentDashForceLeft);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "DestructableObject") {
             Debug.Log("destructable object: " + other.gameObject.name);
             attackTarget = other.gameObject.GetComponent<DestructableObject>();
-            attackTarget.TakeDamage(playerController.DashForce);
+            attackTarget.TakeDamage(currentDashForceLeft);
+            //change needed
+            currentDashForceLeft -= attackTarget.CurrentHp;
+            Debug.Log("CurrentDashForceLeft: " + currentDashForceLeft);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D other) {
-        attackTarget = null;
     }
     
 }

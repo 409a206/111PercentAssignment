@@ -9,22 +9,28 @@ public class DestructableObject : MonoBehaviour
     private Rigidbody2D _rb;
     //시스템 조정 데이터
     [SerializeField]
-    private int hp = 3;
+    private int maxHp = 3;
+    private int currentHp;
+    public int CurrentHp{
+        get{return currentHp;}
+    }
 
     //shield에 대항하는 수치
     [SerializeField]
     private float resistence = 3.0f;
 
-    void Start()
+    void Awake()
     {
         _destructableObject = this.GetComponent<DestructableObject>();
         _rb = this.GetComponent<Rigidbody2D>();
+
+        currentHp = maxHp;
     }
 
     public void TakeDamage(int damage) {
         Debug.Log("TakeDamage called");
-        hp -= damage;
-        if(hp <= 0) {
+        currentHp -= damage;
+        if(currentHp <= 0) {
             GetDestroyed();
         }
     }
@@ -36,12 +42,12 @@ public class DestructableObject : MonoBehaviour
         
         isCalled = true;
 
-        float bounceForce = shieldForce - resistence;
-        if(bounceForce < 1.0f) bounceForce = 1.0f;
+        float bounceForce = (shieldForce - resistence) * 50f;
+        if(bounceForce < 500f) bounceForce = 500f;
         
         Debug.Log("bounceForce: " + bounceForce);
 
-        _rb.velocity = new Vector2(_rb.velocity.x, bounceForce);
+        _rb.AddForce(Vector2.up * bounceForce);
     }
 
     private void GetDestroyed() {

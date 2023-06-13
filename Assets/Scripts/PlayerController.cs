@@ -19,15 +19,18 @@ public class PlayerController : MonoBehaviour
     private float attackRange = 0.1f;
     [SerializeField]
     private float attackCoolTime = 0.5f;
+
     [SerializeField]
     private float shieldForce = 5.0f;
     [SerializeField]
     private float shieldRange = 0.1f;
     [SerializeField]
     private float shieldCoolTime = 0.5f;
-    [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치(양수여야 함)")]
+    [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치")]
     [SerializeField]
+    [Range(1.0f, 10.0f)]
     private float shieldBounceOff = 3.0f;
+
     [SerializeField]
     private int dashForce = 100;
     public int DashForce{
@@ -63,12 +66,15 @@ public class PlayerController : MonoBehaviour
     //쉴드 판정 지점
     [SerializeField]
     private Transform shieldPoint;
+    
+    private GameManager gameManager;
 
    
     void Start()
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
+        gameManager = FindObjectOfType<GameManager>();
 
         distToGround = _col.bounds.extents.y;
 
@@ -195,7 +201,7 @@ public class PlayerController : MonoBehaviour
     //shield의 반작용으로 인해 아래로 튕겨지는 것을 구현한 함수
     private void ShieldBounceOff() {
         Debug.Log("ShieldBounceOff Called");
-        _rb.velocity = new Vector2(_rb.velocity.x, -shieldBounceOff);
+        _rb.AddForce(Vector2.down * (-shieldBounceOff));
     }
 
     public void Dash() {
@@ -204,6 +210,8 @@ public class PlayerController : MonoBehaviour
             //_rb.velocity = new Vector2(_rb.velocity.x, dashForce);
             GameObject instantiatedDashPrefab = Instantiate(Resources.Load("Prefabs/Dash") as GameObject);
             instantiatedDashPrefab.transform.position = this.transform.position;
+
+            gameManager.camera.GetComponent<CameraSmoothFollow>().Target = instantiatedDashPrefab;
 
             StartCoroutine(DashCoroutine(instantiatedDashPrefab));
 
@@ -230,5 +238,9 @@ public class PlayerController : MonoBehaviour
         }
 
         Destroy(dashPrefab);
+
+        gameManager.camera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
+        
+
     }
 }
