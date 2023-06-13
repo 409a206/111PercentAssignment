@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - DestructableObjects
   layers:
   - Default
   - TransparentFX
@@ -12,9 +13,9 @@ TagManager:
   - 
   - Water
   - UI
+  - DestructableObjects
   - Player
   - Ground
-  - 
   - 
   - 
   - 
@@ -48,9 +49,9 @@ TagManager:
   - name: Ground
     uniqueID: 2769828657
     locked: 0
-  - name: DestructableObjects
-    uniqueID: 1869302117
-    locked: 0
   - name: Player
     uniqueID: 3989830693
+    locked: 0
+  - name: DestructableObjects
+    uniqueID: 1869302117
     locked: 0

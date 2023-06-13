@@ -12,33 +12,36 @@ public class PlayerController : MonoBehaviour
     //adjustable data variables
     [SerializeField]
     private float jumpForce = 1;
+    [SerializeField]
+    private int attackForce = 1;
 
     //derived data variables
     float distToGround;
     [SerializeField]
     private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask destructableObjectLayer;
 
     //reference variables
-    // [SerializeField]
-    // private Button jumpButton;
-    // [SerializeField]
-    // private Button shieldButton;
-    // [SerializeField]
-    // private Button attackButton;
+    //공격 판정 범위 콜라이더
+    private Collider2D attackCol;
+    //destructable object 콜라이더
+    private Collider2D DoCol;
     
     void Start()
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
 
-       
+        attackCol = GetComponentInChildren<Collider2D>();
+
         distToGround = _col.bounds.extents.y;
 
     }
 
     void Update()
     {
-        
+        Debug.Log(IsTouchingDestructableObject());
     }
 
     private bool IsGrounded() {
@@ -46,8 +49,19 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Jump() {
-            if(IsGrounded()) {
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
-            }
+        if(IsGrounded() && !IsTouchingDestructableObject()) {
+            _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+        }
+    }
+
+    //Destructable Object와 접촉중인지 확인하는 함수
+    private bool IsTouchingDestructableObject() {
+        return Physics2D.Raycast(transform.position, Vector2.up, distToGround + 0.1f, destructableObjectLayer);
+    }
+
+    public void Attack() {
+        if(attackCol.IsTouching(DoCol)) {
+            
+        }
     }
 }
