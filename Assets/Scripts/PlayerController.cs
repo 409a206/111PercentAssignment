@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Destroy(dashPrefab);
-
+        
         gameManager.camera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
         
 

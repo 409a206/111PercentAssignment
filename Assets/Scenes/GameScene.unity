@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8acf5c8abc70f448d01ff54db3a1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 0}
 --- !u!1001 &137160133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1086,7 +1087,7 @@ MonoBehaviour:
   shieldCoolTime: 0.1
   shieldBounceOff: 6.62
   dashForce: 100
-  dashDuration: 3
+  dashDuration: 1
   dashSpeed: 200
   requiredJumpStacksForDash: 1
   groundLayer:
