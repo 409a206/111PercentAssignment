@@ -1087,7 +1087,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 20
   attackForce: 1
+  attackCoolTime: 0.5
   shieldForce: 15
+  shieldCoolTime: 5
   shieldBounceOff: 3
   dashForce: 100
   dashCoolTime: 10

@@ -16,7 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int attackForce = 1;
     [SerializeField]
+    private float attackCoolTime = 0.5f;
+    [SerializeField]
     private float shieldForce = 5.0f;
+    [SerializeField]
+    private float shieldCoolTime = 0.5f;
     [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치(양수여야 함)")]
     [SerializeField]
     private float shieldBounceOff = 3.0f;
@@ -24,7 +28,10 @@ public class PlayerController : MonoBehaviour
     private float dashForce = 100f;
     [SerializeField]
     private float dashCoolTime = 10.0f;
-    private float elapsedTime;
+
+    //flag variables
+    private bool canAttack = true;
+    private bool canShield = true;
     private bool canDash = true;
 
     //derived data variables
@@ -50,13 +57,59 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(elapsedTime);
-        if(!canDash) {
+       StartCoroutine(CheckDashCoolTime());
+       StartCoroutine(CheckAttackCoolTime());
+       StartCoroutine(CheckShieldCoolTIme());
+    }
+
+    private IEnumerator CheckShieldCoolTIme()
+    {
+        float elapsedTime = 0f;
+        
+        while(!canShield) {
             elapsedTime += Time.deltaTime;
+            //Debug.Log(elapsedTime);
+
+            if(elapsedTime >= shieldCoolTime) {
+                elapsedTime = shieldCoolTime;
+                canShield = !canShield;
+            }
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator CheckAttackCoolTime()
+    {
+        float elapsedTime = 0f;
+        
+        while(!canAttack) {
+            elapsedTime += Time.deltaTime;
+            Debug.Log(elapsedTime);
+
+            if(elapsedTime >= attackCoolTime) {
+                elapsedTime = attackCoolTime;
+                canAttack = !canAttack;
+            }
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator CheckDashCoolTime() {
+
+        float elapsedTime = 0f;
+        
+        while(!canDash) {
+            elapsedTime += Time.deltaTime;
+            //Debug.Log(elapsedTime);
+
             if(elapsedTime >= dashCoolTime) {
                 elapsedTime = dashCoolTime;
                 canDash = !canDash;
             }
+
+            yield return null;
         }
     }
 
@@ -76,20 +129,27 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        // Debug.Log("attack!");
-        hitBox.AttackTarget?.TakeDamage(attackForce);
+         Debug.Log("attack!");
+        if(canAttack) {
+            hitBox.AttackTarget?.TakeDamage(attackForce);
+            canAttack = !canAttack;
+        }
     }
 
     public void Shield() {
-        //Debug.Log("Shield!");
-        bool isBounceOffFunctionCalled = false;
+        Debug.Log("Shield!");
+        if(canShield) {
+            bool isBounceOffFunctionCalled = false;
 
-        hitBox.AttackTarget?.BounceOff(shieldForce, out isBounceOffFunctionCalled);
+            hitBox.AttackTarget?.BounceOff(shieldForce, out isBounceOffFunctionCalled);
 
-        if(isBounceOffFunctionCalled) ShieldBounceOff();
+            if(isBounceOffFunctionCalled) ShieldBounceOff();
+
+            canShield = !canShield;
+        }
     }
 
-    //shield로 인해 아래로 튕겨지는 것을 구현한 함수
+    //shield의 반작용으로 인해 아래로 튕겨지는 것을 구현한 함수
     private void ShieldBounceOff() {
         Debug.Log("ShieldBounceOff Called");
         _rb.velocity = new Vector2(_rb.velocity.x, -shieldBounceOff);
@@ -99,7 +159,6 @@ public class PlayerController : MonoBehaviour
         if(canDash) {
             _rb.velocity = new Vector2(_rb.velocity.x, dashForce);
             canDash = !canDash;
-            elapsedTime = 0;
         }
     }
 }
