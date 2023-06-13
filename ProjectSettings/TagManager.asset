@@ -45,7 +45,7 @@ TagManager:
   - name: Background
     uniqueID: 2559537985
     locked: 0
-  - name: LandingGround
+  - name: Ground
     uniqueID: 2769828657
     locked: 0
   - name: DestructableObjects

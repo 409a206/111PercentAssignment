@@ -9,42 +9,45 @@ public class PlayerController : MonoBehaviour
     private Collider2D _col;
     private Rigidbody2D _rb;
 
+    //adjustable data variables
+    [SerializeField]
+    private float jumpForce = 1;
+
+    //derived data variables
+    float distToGround;
     [SerializeField]
     private LayerMask groundLayer;
 
-    float distToGround;
-
-    [SerializeField]
-    private float jumpForce;
-
     //reference variables
-    [SerializeField]
-    private Button jumpButton;
-    [SerializeField]
-    private Button shieldButton;
-    [SerializeField]
-    private Button attackButton;
+    // [SerializeField]
+    // private Button jumpButton;
+    // [SerializeField]
+    // private Button shieldButton;
+    // [SerializeField]
+    // private Button attackButton;
     
     void Start()
     {
-        _col = this.gameObject.GetComponent<Collider2D>();
+        _col = GetComponent<Collider2D>();
+        _rb = GetComponent<Rigidbody2D>();
 
+       
         distToGround = _col.bounds.extents.y;
 
     }
 
     void Update()
     {
-
+        
     }
 
     private bool IsGrounded() {
         return Physics2D.Raycast(transform.position, Vector2.down, distToGround + 0.1f, groundLayer);
     }
 
-    private void Jump() {
-        if(IsGrounded()) {
-            _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
-        }
+    public void Jump() {
+            if(IsGrounded()) {
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+            }
     }
 }
