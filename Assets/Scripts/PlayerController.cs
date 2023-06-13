@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        Debug.Log("attack!");
-        hitBox.AttackTarget.TakeDamage(attackForce);
+        // Debug.Log("attack!");
+        hitBox.AttackTarget?.TakeDamage(attackForce);
     }
 }
