@@ -1092,6 +1092,8 @@ MonoBehaviour:
   shieldCoolTime: 0.1
   shieldBounceOff: 3
   dashForce: 10
+  dashDuration: 5
+  dashSpeed: 100
   requiredJumpStacksForDash: 1
   groundLayer:
     serializedVersion: 2

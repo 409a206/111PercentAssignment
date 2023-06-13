@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     //대쉬 지속 시간(초)
     [SerializeField]
     private float dashDuration = 5.0f;
+    //대쉬 속도
+    [SerializeField]
+    private float dashSpeed = 2.0f;
     [SerializeField]
     private int requiredJumpStacksForDash = 3;
     private int currentJumpStacks = 0;
@@ -172,19 +175,30 @@ public class PlayerController : MonoBehaviour
             GameObject instantiatedDashPrefab = Instantiate(Resources.Load("Prefabs/Dash") as GameObject);
             instantiatedDashPrefab.transform.position = this.transform.position;
 
-            StartCoroutine(DashCoroutine());
+            StartCoroutine(DashCoroutine(instantiatedDashPrefab));
 
             currentJumpStacks = 0;
             canDash = !canDash;
         }
     }
 
-    IEnumerator DashCoroutine()
+    IEnumerator DashCoroutine(GameObject dashPrefab)
     {
         float elapsedTime = 0f;
+
         while(elapsedTime < dashDuration) {
             elapsedTime += Time.deltaTime;
+            if(elapsedTime >= dashDuration) elapsedTime = dashDuration;
+
+            //variable for a smoother step
+            float t = elapsedTime / dashDuration;
+            t = Mathf.Sin(t * Mathf.PI * 0.5f);
+
+            dashPrefab.transform.Translate(Vector2.up * dashSpeed * t * Time.deltaTime);
+
+            yield return null;
         }
-        yield return null;
+
+        Destroy(dashPrefab);
     }
 }
