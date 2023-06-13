@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1926223737083736311}
   m_Layer: 6
   m_Name: Square
-  m_TagString: DestructableObjects
+  m_TagString: DestructableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,3 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 3
+  resistence: 1

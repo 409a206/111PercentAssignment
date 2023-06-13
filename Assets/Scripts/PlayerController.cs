@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 1;
     [SerializeField]
     private int attackForce = 1;
+    [SerializeField]
+    private float shieldForce = 5.0f;
+
+    [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치(양수여야함)")]
+    [SerializeField]
+    private float shieldBounceOff = 3.0f;
 
     //derived data variables
     float distToGround;
@@ -24,8 +30,7 @@ public class PlayerController : MonoBehaviour
 
     //reference variables
     private HitBox hitBox;
-    
-    
+   
     void Start()
     {
         _col = GetComponent<Collider2D>();
@@ -61,5 +66,20 @@ public class PlayerController : MonoBehaviour
     public void Attack() {
         // Debug.Log("attack!");
         hitBox.AttackTarget?.TakeDamage(attackForce);
+    }
+
+    public void Shield() {
+        //Debug.Log("Shield!");
+        bool isBounceOffFunctionCalled = false;
+
+        hitBox.AttackTarget?.BounceOff(shieldForce, out isBounceOffFunctionCalled);
+
+        if(isBounceOffFunctionCalled) ShieldBounceOff();
+    }
+
+    //shield로 인해 아래로 튕겨지는 것을 구현한 함수
+    private void ShieldBounceOff() {
+        Debug.Log("ShieldBounceOff Called");
+        _rb.velocity = new Vector2(_rb.velocity.x, -shieldBounceOff);
     }
 }
