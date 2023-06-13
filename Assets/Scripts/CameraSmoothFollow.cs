@@ -11,6 +11,9 @@ public class CameraSmoothFollow : MonoBehaviour
     //reference variables
     [SerializeField]
     private GameObject target;
+    public GameObject Target{
+        set{target = value;}
+    }
     public float speed = 2.0f;
 
     //derived variables
@@ -43,8 +46,7 @@ public class CameraSmoothFollow : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         FollowPlayer();   
     }
