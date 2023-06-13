@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 210216951}
   - component: {fileID: 210216953}
   - component: {fileID: 210216954}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +538,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 924497987}
-  speed: 2
+  speed: 30
+  yMargin: 1.5
 --- !u!1 &583454670
 GameObject:
   m_ObjectHideFlags: 0

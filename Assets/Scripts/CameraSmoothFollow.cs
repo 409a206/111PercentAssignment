@@ -12,12 +12,11 @@ public class CameraSmoothFollow : MonoBehaviour
     [SerializeField]
     private GameObject target;
     public float speed = 2.0f;
-    
-    //카메라가 가질 수 있는 최대 x와 y좌표
-    private Vector2 maxXAndY;
 
-    //카메라가 가질 수 있는 최소 x와 y좌표
-    private Vector2 minXAndY;
+    //derived variables
+
+    //카메라가 가질 수 있는 최대 y좌표
+    private float maxY;
 
 
     private void Awake() {
@@ -27,23 +26,43 @@ public class CameraSmoothFollow : MonoBehaviour
         var backgroundBounds = 
             GameObject.Find("Background").GetComponent<Renderer>().bounds;
 
+        //월드 좌표계에서 카메라가 볼 수 있는 경계를 얻음
+        var camTopLeft = _cam.ViewportToWorldPoint(new Vector3(0,0,0));
+
+        var camBottomRight = _cam.ViewportToWorldPoint(new Vector3(1,1,0));
+        Debug.Log("camTopLeft: " + camTopLeft);
+        Debug.Log("camBottomRight: " + camBottomRight);
+
+        //자동으로 max값 설정
+        maxY = backgroundBounds.max.y - camBottomRight.y;
+        Debug.Log("maxY: " + maxY);
+       
         target = GameObject.Find("Player");
+
+        if(target == null) {
+            Debug.LogError("Player object not found");
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         FollowPlayer();   
     }
 
     private void FollowPlayer()
     {
-        float Interpolation = speed * Time.deltaTime;
+       
+        float Interpolation = speed * Time.fixedDeltaTime;
 
-        Vector3 position = transform.position;
+        Vector3 pos = transform.position;
 
-        position.y = Mathf.Lerp(transform.position.y, target.transform.position.y, Interpolation);
-        
-        transform.position = position;
+        pos.y = Mathf.Lerp(transform.position.y, target.transform.position.y, Interpolation);
+
+        if(pos.y < maxY) {
+            pos.y = maxY;
+        }
+       
+        this.transform.position = pos;
     }
 }

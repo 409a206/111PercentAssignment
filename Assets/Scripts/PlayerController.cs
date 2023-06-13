@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(IsTouchingDestructableObject());
+        //Debug.Log(IsTouchingDestructableObject());
+        Debug.Log(IsGrounded());
     }
 
     private bool IsGrounded() {
