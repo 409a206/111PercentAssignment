@@ -12,33 +12,35 @@ public class PlayerController : MonoBehaviour
     //adjustable data variables
     [SerializeField]
     private float jumpForce = 1;
+    [SerializeField]
+    private int attackForce = 1;
 
     //derived data variables
     float distToGround;
     [SerializeField]
     private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask destructableObjectLayer;
 
     //reference variables
-    // [SerializeField]
-    // private Button jumpButton;
-    // [SerializeField]
-    // private Button shieldButton;
-    // [SerializeField]
-    // private Button attackButton;
+    private HitBox hitBox;
+    
     
     void Start()
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
 
-       
+        hitBox = GetComponentInChildren<HitBox>();
+
         distToGround = _col.bounds.extents.y;
 
     }
 
     void Update()
     {
-        
+        //Debug.Log(IsTouchingDestructableObject());
+        Debug.Log(IsGrounded());
     }
 
     private bool IsGrounded() {
@@ -46,8 +48,18 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Jump() {
-            if(IsGrounded()) {
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
-            }
+        if(IsGrounded() && !IsTouchingDestructableObject()) {
+            _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+        }
+    }
+
+    //Destructable Object와 접촉중인지 확인하는 함수
+    private bool IsTouchingDestructableObject() {
+        return Physics2D.Raycast(transform.position, Vector2.up, distToGround + 0.1f, destructableObjectLayer);
+    }
+
+    public void Attack() {
+        // Debug.Log("attack!");
+        hitBox.AttackTarget?.TakeDamage(attackForce);
     }
 }
