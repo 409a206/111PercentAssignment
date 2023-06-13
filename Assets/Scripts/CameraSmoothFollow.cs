@@ -15,8 +15,8 @@ public class CameraSmoothFollow : MonoBehaviour
 
     //derived variables
 
-    //카메라가 가질 수 있는 최대 y좌표
-    private float maxY;
+    //카메라가 가질 수 있는 최소 y좌표
+    private float minY;
 
 
     private void Awake() {
@@ -28,14 +28,13 @@ public class CameraSmoothFollow : MonoBehaviour
 
         //월드 좌표계에서 카메라가 볼 수 있는 경계를 얻음
         var camTopLeft = _cam.ViewportToWorldPoint(new Vector3(0,0,0));
-
         var camBottomRight = _cam.ViewportToWorldPoint(new Vector3(1,1,0));
-        Debug.Log("camTopLeft: " + camTopLeft);
-        Debug.Log("camBottomRight: " + camBottomRight);
+        // Debug.Log("camTopLeft: " + camTopLeft);
+        // Debug.Log("camBottomRight: " + camBottomRight);
 
         //자동으로 max값 설정
-        maxY = backgroundBounds.max.y - camBottomRight.y;
-        Debug.Log("maxY: " + maxY);
+        minY = backgroundBounds.max.y - camBottomRight.y;
+        Debug.Log("minY: " + minY);
        
         target = GameObject.Find("Player");
 
@@ -59,8 +58,8 @@ public class CameraSmoothFollow : MonoBehaviour
 
         pos.y = Mathf.Lerp(transform.position.y, target.transform.position.y, Interpolation);
 
-        if(pos.y < maxY) {
-            pos.y = maxY;
+        if(pos.y <= minY) {
+            pos.y = minY;
         }
        
         this.transform.position = pos;

@@ -539,7 +539,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 924497987}
   speed: 30
-  yMargin: 1.5
 --- !u!1 &583454670
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,9 +712,10 @@ GameObject:
   m_Component:
   - component: {fileID: 635957843}
   - component: {fileID: 635957844}
+  - component: {fileID: 635957845}
   m_Layer: 7
-  m_Name: AttackCollider
-  m_TagString: Untagged
+  m_Name: HitBox
+  m_TagString: HitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,6 +761,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &635957845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635957842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d7fc44f1802ab04e948951dd45db716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &697381760
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,7 +1009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de121f7a30e4a78489616828b35f2902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
+  jumpForce: 20
   attackForce: 1
   groundLayer:
     serializedVersion: 2
@@ -1269,7 +1281,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1404776969}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 924497991}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1404776969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1922,7 +1946,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1926223737083736298, guid: b51e6cac91f47ba45bfbc6fe415fec7a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926223737083736298, guid: b51e6cac91f47ba45bfbc6fe415fec7a, type: 3}
+      propertyPath: m_TagString
+      value: DestructableObject
       objectReference: {fileID: 0}
     - target: {fileID: 1926223737083736299, guid: b51e6cac91f47ba45bfbc6fe415fec7a, type: 3}
       propertyPath: m_RootOrder
@@ -1934,7 +1962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1926223737083736299, guid: b51e6cac91f47ba45bfbc6fe415fec7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.06
+      value: 11.19
       objectReference: {fileID: 0}
     - target: {fileID: 1926223737083736299, guid: b51e6cac91f47ba45bfbc6fe415fec7a, type: 3}
       propertyPath: m_LocalPosition.z

@@ -23,17 +23,15 @@ public class PlayerController : MonoBehaviour
     private LayerMask destructableObjectLayer;
 
     //reference variables
-    //공격 판정 범위 콜라이더
-    private Collider2D attackCol;
-    //destructable object 콜라이더
-    private Collider2D DoCol;
+    private HitBox hitBox;
+    
     
     void Start()
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
 
-        attackCol = GetComponentInChildren<Collider2D>();
+        hitBox = GetComponentInChildren<HitBox>();
 
         distToGround = _col.bounds.extents.y;
 
@@ -61,8 +59,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        if(attackCol.IsTouching(DoCol)) {
-            
-        }
+        Debug.Log("attack!");
+        hitBox.AttackTarget.TakeDamage(attackForce);
     }
 }

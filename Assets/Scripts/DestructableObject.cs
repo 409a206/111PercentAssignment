@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestructableObject : MonoBehaviour
 {
+    //component variables
+    private DestructableObject _destructableObject;
     //시스템 조정 데이터
     [SerializeField]
     private int hp = 3;
@@ -11,7 +13,7 @@ public class DestructableObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _destructableObject = this.GetComponent<DestructableObject>();
     }
 
     // Update is called once per frame
@@ -20,7 +22,8 @@ public class DestructableObject : MonoBehaviour
         
     }
 
-    private void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
+        Debug.Log("TakeDamage called");
         hp -= damage;
         if(hp <= 0) {
             GetDestroyed();
@@ -30,4 +33,5 @@ public class DestructableObject : MonoBehaviour
     private void GetDestroyed() {
         Destroy(this.gameObject);
     }
+
 }
