@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float shieldBounceOff = 3.0f;
     [SerializeField]
+    private float dashForce = 100f;
+    [SerializeField]
     private float dashCoolTime = 10.0f;
+    private float elapsedTime;
+    private bool canDash = true;
 
     //derived data variables
     float distToGround;
@@ -45,8 +50,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(IsTouchingDestructableObject());
-        //Debug.Log(IsGrounded());
+        Debug.Log(elapsedTime);
+        if(!canDash) {
+            elapsedTime += Time.deltaTime;
+            if(elapsedTime >= dashCoolTime) {
+                elapsedTime = dashCoolTime;
+                canDash = !canDash;
+            }
+        }
     }
 
     private bool IsGrounded() {
@@ -85,6 +96,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Dash() {
-        
+        if(canDash) {
+            _rb.velocity = new Vector2(_rb.velocity.x, dashForce);
+            canDash = !canDash;
+            elapsedTime = 0;
+        }
     }
 }
