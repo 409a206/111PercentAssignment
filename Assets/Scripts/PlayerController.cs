@@ -16,10 +16,11 @@ public class PlayerController : MonoBehaviour
     private int attackForce = 1;
     [SerializeField]
     private float shieldForce = 5.0f;
-
-    [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치(양수여야함)")]
+    [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치(양수여야 함)")]
     [SerializeField]
     private float shieldBounceOff = 3.0f;
+    [SerializeField]
+    private float dashCoolTime = 10.0f;
 
     //derived data variables
     float distToGround;
@@ -81,5 +82,9 @@ public class PlayerController : MonoBehaviour
     private void ShieldBounceOff() {
         Debug.Log("ShieldBounceOff Called");
         _rb.velocity = new Vector2(_rb.velocity.x, -shieldBounceOff);
+    }
+
+    public void Dash() {
+        
     }
 }
