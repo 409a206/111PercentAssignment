@@ -15,9 +15,6 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 1;
     [SerializeField]
     private int attackForce = 1;
-    public int AttackForce{
-        get{return attackForce;}
-    }
     [SerializeField]
     private float attackRange = 0.1f;
     [SerializeField]
@@ -32,7 +29,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float shieldBounceOff = 3.0f;
     [SerializeField]
-    private float dashForce = 100f;
+    private int dashForce = 100;
+    public int DashForce{
+        get{return dashForce;}
+    }
     //대쉬 지속 시간(초)
     [SerializeField]
     private float dashDuration = 5.0f;
@@ -139,7 +139,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-         Debug.Log("attack!");
+        //Debug.Log("attack!");
+        
         if(canAttack) {
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, destructableObjectLayer);
 
@@ -168,7 +169,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Shield() {
-        Debug.Log("Shield!");
+        //Debug.Log("Shield!");
+        
         if(canShield) {
             bool isBounceOffFunctionCalled = false;
 

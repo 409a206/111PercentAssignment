@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitBox : MonoBehaviour
+public class DashHitBox : MonoBehaviour
 {
     private PlayerController playerController;
     private DestructableObject attackTarget;
@@ -20,7 +20,7 @@ public class HitBox : MonoBehaviour
         if(other.tag == "DestructableObject") {
             Debug.Log("destructable object: " + other.gameObject.name);
             attackTarget = other.gameObject.GetComponent<DestructableObject>();
-            attackTarget.TakeDamage(playerController.AttackForce);
+            attackTarget.TakeDamage(playerController.DashForce);
         }
     }
 
