@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 1;
     [SerializeField]
     private int attackForce = 1;
+    [SerializeField]
+    private float shieldForce = 5.0f;
 
     //derived data variables
     float distToGround;
@@ -61,5 +63,10 @@ public class PlayerController : MonoBehaviour
     public void Attack() {
         // Debug.Log("attack!");
         hitBox.AttackTarget?.TakeDamage(attackForce);
+    }
+
+    public void Shield() {
+        //Debug.Log("Shield!");
+        hitBox.AttackTarget?.BounceOff(shieldForce);
     }
 }
