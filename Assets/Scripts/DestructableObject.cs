@@ -42,8 +42,6 @@ public class DestructableObject : MonoBehaviour
         Debug.Log("bounceForce: " + bounceForce);
 
         _rb.velocity = new Vector2(_rb.velocity.x, bounceForce);
-
-
     }
 
     private void GetDestroyed() {

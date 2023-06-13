@@ -57,9 +57,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-       StartCoroutine(CheckDashCoolTime());
-       StartCoroutine(CheckAttackCoolTime());
-       StartCoroutine(CheckShieldCoolTIme());
     }
 
     private IEnumerator CheckShieldCoolTIme()
@@ -73,6 +70,7 @@ public class PlayerController : MonoBehaviour
             if(elapsedTime >= shieldCoolTime) {
                 elapsedTime = shieldCoolTime;
                 canShield = !canShield;
+                
             }
 
             yield return null;
@@ -85,7 +83,7 @@ public class PlayerController : MonoBehaviour
         
         while(!canAttack) {
             elapsedTime += Time.deltaTime;
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
 
             if(elapsedTime >= attackCoolTime) {
                 elapsedTime = attackCoolTime;
@@ -133,7 +131,14 @@ public class PlayerController : MonoBehaviour
         if(canAttack) {
             hitBox.AttackTarget?.TakeDamage(attackForce);
             canAttack = !canAttack;
+            StartCoroutine(CheckAttackCoolTime());
+            //StartCoroutine(PlayAttackAnim());
         }
+    }
+
+    private IEnumerator PlayAttackAnim()
+    {
+        throw new NotImplementedException();
     }
 
     public void Shield() {
@@ -146,7 +151,14 @@ public class PlayerController : MonoBehaviour
             if(isBounceOffFunctionCalled) ShieldBounceOff();
 
             canShield = !canShield;
+            StartCoroutine(CheckShieldCoolTIme());
+            //StartCoroutine(PlayShieldAnim());
         }
+    }
+
+    private string PlayShieldAnim()
+    {
+        throw new NotImplementedException();
     }
 
     //shield의 반작용으로 인해 아래로 튕겨지는 것을 구현한 함수
@@ -159,6 +171,7 @@ public class PlayerController : MonoBehaviour
         if(canDash) {
             _rb.velocity = new Vector2(_rb.velocity.x, dashForce);
             canDash = !canDash;
+            StartCoroutine(CheckDashCoolTime());
         }
     }
 }
