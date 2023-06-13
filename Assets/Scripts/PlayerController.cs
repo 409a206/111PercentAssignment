@@ -18,11 +18,14 @@ public class PlayerController : MonoBehaviour
     public int AttackForce{
         get{return attackForce;}
     }
-
+    [SerializeField]
+    private float attackRange = 0.1f;
     [SerializeField]
     private float attackCoolTime = 0.5f;
     [SerializeField]
     private float shieldForce = 5.0f;
+    [SerializeField]
+    private float shieldRange = 0.1f;
     [SerializeField]
     private float shieldCoolTime = 0.5f;
     [Tooltip("쉴드로 인해 플레이어가 아래로 튕기는 수치(양수여야 함)")]
@@ -54,15 +57,18 @@ public class PlayerController : MonoBehaviour
     private LayerMask destructableObjectLayer;
 
     //reference variables
-    //private GameObject hitBoxGo;
+    //공격 판정 지점
+    [SerializeField]
+    private Transform attackPoint;
+    //쉴드 판정 지점
+    [SerializeField]
+    private Transform shieldPoint;
+
    
     void Start()
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
-
-        // hitBoxGo = GetComponentInChildren<HitBox>().transform.gameObject;
-        // hitBoxGo.SetActive(false);
 
         distToGround = _col.bounds.extents.y;
 
@@ -135,12 +141,25 @@ public class PlayerController : MonoBehaviour
     public void Attack() {
          Debug.Log("attack!");
         if(canAttack) {
-            //hitBoxGo.AttackTarget?.TakeDamage(attackForce);
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, destructableObjectLayer);
+
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                Debug.Log("player hit " + enemy.name);
+                enemy.transform.gameObject.GetComponent<DestructableObject>().TakeDamage(attackForce);
+            }
+
             canAttack = !canAttack;
            
             StartCoroutine(CheckAttackCoolTime());
+
             //StartCoroutine(PlayAttackAnim());
         }
+    }
+
+    private void OnDrawGizmosSelected() {
+        if(attackPoint != null) Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if(shieldPoint != null) Gizmos.DrawWireSphere(shieldPoint.position, shieldRange);
     }
 
     private IEnumerator PlayAttackAnim()
@@ -153,8 +172,11 @@ public class PlayerController : MonoBehaviour
         if(canShield) {
             bool isBounceOffFunctionCalled = false;
 
-            //hitBoxGo.GetComponent<HitBox>().AttackTarget?.BounceOff(shieldForce, out isBounceOffFunctionCalled);
+            Collider2D blockedEnemy = Physics2D.OverlapCircle(shieldPoint.position, shieldRange, destructableObjectLayer);
 
+            Debug.Log("player blocked " + blockedEnemy?.name);
+            blockedEnemy?.transform.gameObject.GetComponent<DestructableObject>().BounceOff(shieldForce, out isBounceOffFunctionCalled);
+            
             if(isBounceOffFunctionCalled) ShieldBounceOff();
 
             canShield = !canShield;
