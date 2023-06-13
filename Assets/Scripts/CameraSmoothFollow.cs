@@ -32,7 +32,7 @@ public class CameraSmoothFollow : MonoBehaviour
         // Debug.Log("camTopLeft: " + camTopLeft);
         // Debug.Log("camBottomRight: " + camBottomRight);
 
-        //자동으로 max값 설정
+        //자동으로 min값 설정
         minY = backgroundBounds.max.y - camBottomRight.y;
         Debug.Log("minY: " + minY);
        
