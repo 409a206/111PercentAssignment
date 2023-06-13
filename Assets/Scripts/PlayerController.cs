@@ -26,13 +26,18 @@ public class PlayerController : MonoBehaviour
     private float shieldBounceOff = 3.0f;
     [SerializeField]
     private float dashForce = 100f;
+    //대쉬 지속 시간(초)
     [SerializeField]
-    private float dashCoolTime = 10.0f;
+    private float dashDuration = 5.0f;
+    [SerializeField]
+    private int requiredJumpStacksForDash = 3;
+    private int currentJumpStacks = 0;
+
 
     //flag variables
     private bool canAttack = true;
     private bool canShield = true;
-    private bool canDash = true;
+    private bool canDash = false;
 
     //derived data variables
     float distToGround;
@@ -56,7 +61,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
+    {}
+
+    private void CheckCanDash()
     {
+        if(currentJumpStacks >= requiredJumpStacksForDash) {
+            currentJumpStacks = requiredJumpStacksForDash;
+            canDash = true;
+        } 
     }
 
     private IEnumerator CheckShieldCoolTIme()
@@ -94,23 +106,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckDashCoolTime() {
-
-        float elapsedTime = 0f;
-        
-        while(!canDash) {
-            elapsedTime += Time.deltaTime;
-            //Debug.Log(elapsedTime);
-
-            if(elapsedTime >= dashCoolTime) {
-                elapsedTime = dashCoolTime;
-                canDash = !canDash;
-            }
-
-            yield return null;
-        }
-    }
-
     private bool IsGrounded() {
         return Physics2D.Raycast(transform.position, Vector2.down, distToGround + 0.1f, groundLayer);
     }
@@ -118,6 +113,9 @@ public class PlayerController : MonoBehaviour
     public void Jump() {
         if(IsGrounded() && !IsTouchingDestructableObject()) {
             _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+            currentJumpStacks++;
+            CheckCanDash();
+            Debug.Log("CurrentJumpStacks: " + currentJumpStacks);
         }
     }
 
@@ -169,9 +167,24 @@ public class PlayerController : MonoBehaviour
 
     public void Dash() {
         if(canDash) {
-            _rb.velocity = new Vector2(_rb.velocity.x, dashForce);
+            Debug.Log("Dash!");
+            //_rb.velocity = new Vector2(_rb.velocity.x, dashForce);
+            GameObject instantiatedDashPrefab = Instantiate(Resources.Load("Prefabs/Dash") as GameObject);
+            instantiatedDashPrefab.transform.position = this.transform.position;
+
+            StartCoroutine(DashCoroutine());
+
+            currentJumpStacks = 0;
             canDash = !canDash;
-            StartCoroutine(CheckDashCoolTime());
         }
+    }
+
+    IEnumerator DashCoroutine()
+    {
+        float elapsedTime = 0f;
+        while(elapsedTime < dashDuration) {
+            elapsedTime += Time.deltaTime;
+        }
+        yield return null;
     }
 }
