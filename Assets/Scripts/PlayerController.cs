@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 1;
     [SerializeField]
     private int attackForce = 1;
+    public int AttackForce{
+        get{return attackForce;}
+    }
+
     [SerializeField]
     private float attackCoolTime = 0.5f;
     [SerializeField]
@@ -50,14 +54,15 @@ public class PlayerController : MonoBehaviour
     private LayerMask destructableObjectLayer;
 
     //reference variables
-    private HitBox hitBox;
+    //private GameObject hitBoxGo;
    
     void Start()
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
 
-        hitBox = GetComponentInChildren<HitBox>();
+        // hitBoxGo = GetComponentInChildren<HitBox>().transform.gameObject;
+        // hitBoxGo.SetActive(false);
 
         distToGround = _col.bounds.extents.y;
 
@@ -130,8 +135,9 @@ public class PlayerController : MonoBehaviour
     public void Attack() {
          Debug.Log("attack!");
         if(canAttack) {
-            hitBox.AttackTarget?.TakeDamage(attackForce);
+            //hitBoxGo.AttackTarget?.TakeDamage(attackForce);
             canAttack = !canAttack;
+           
             StartCoroutine(CheckAttackCoolTime());
             //StartCoroutine(PlayAttackAnim());
         }
@@ -147,7 +153,7 @@ public class PlayerController : MonoBehaviour
         if(canShield) {
             bool isBounceOffFunctionCalled = false;
 
-            hitBox.AttackTarget?.BounceOff(shieldForce, out isBounceOffFunctionCalled);
+            //hitBoxGo.GetComponent<HitBox>().AttackTarget?.BounceOff(shieldForce, out isBounceOffFunctionCalled);
 
             if(isBounceOffFunctionCalled) ShieldBounceOff();
 
@@ -190,7 +196,7 @@ public class PlayerController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             if(elapsedTime >= dashDuration) elapsedTime = dashDuration;
 
-            //variable for a smoother step
+            //temporary variable for a smoother step
             float t = elapsedTime / dashDuration;
             t = Mathf.Sin(t * Mathf.PI * 0.5f);
 
