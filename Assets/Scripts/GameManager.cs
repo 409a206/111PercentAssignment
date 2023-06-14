@@ -30,4 +30,9 @@ public class GameManager : MonoBehaviour
        //Physics2D.OverlapBox(camTopLeft ,new Vector2(0,0.1f,0), )
        //if(camTopLeft)
     }
+
+    public void GameOver()
+    {
+        
+    }
 }

@@ -10,8 +10,14 @@ public class PlayerController : MonoBehaviour
     //Component variables
     private Collider2D _col;
     private Rigidbody2D _rb;
+    private Animator animator;
 
     //adjustable data variables
+    [SerializeField]
+    private int maxHp = 10;
+    [SerializeField]
+    private int currentHp;
+
     [SerializeField]
     private float jumpForce = 1;
     [SerializeField]
@@ -77,9 +83,11 @@ public class PlayerController : MonoBehaviour
 
     //flag variables
     private bool canAttack = true;
+    private bool isAttackRight = true;
     private bool canShield = true;
     private bool canDash = false;
     private bool canOverdrive = false;
+    private bool IsOverdrive = false;
 
     //derived data variables
     float distToGround;
@@ -102,14 +110,33 @@ public class PlayerController : MonoBehaviour
    
     void Start()
     {
+        currentHp = maxHp;
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
         gameManager = FindObjectOfType<GameManager>();
 
         distToGround = _col.bounds.extents.y;
 
     }
-    
+
+    private void Update() {
+        CheckCurrentVelocity();
+        CheckIsAir();
+    }
+
+    private void CheckIsAir()
+    {
+        animator.SetBool("IsAir", !IsGrounded());
+    }
+
+    private void CheckCurrentVelocity()
+    {
+        float velocity = this._rb.velocity.y;
+        Debug.Log("velocity.y: " + velocity);
+        animator.SetFloat("Velocity", velocity);
+    }
+
     private void CheckCanDash()
     {
         if(currentJumpStacks >= requiredJumpStacksForDash) {
@@ -182,6 +209,12 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("attack!");
         
         if(canAttack) {
+            if(isAttackRight) {
+                animator.SetTrigger("AttackRight");
+            } else {
+                animator.SetTrigger("AttackLeft");
+            }
+            isAttackRight = !isAttackRight;
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, destructableObjectLayer);
 
             foreach (Collider2D enemy in hitEnemies)
@@ -205,15 +238,11 @@ public class PlayerController : MonoBehaviour
         if(shieldPoint != null) Gizmos.DrawWireSphere(shieldPoint.position, shieldRange);
     }
 
-    private IEnumerator PlayAttackAnim()
-    {
-        throw new NotImplementedException();
-    }
-
     public void Shield() {
         //Debug.Log("Shield!");
         
         if(canShield) {
+            animator.SetTrigger("Shield");
             bool isBounceOffFunctionCalled = false;
 
             Collider2D blockedEnemy = Physics2D.OverlapCircle(shieldPoint.position, shieldRange, destructableObjectLayer);
@@ -227,11 +256,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(CheckShieldCoolTIme());
             //StartCoroutine(PlayShieldAnim());
         }
-    }
-
-    private string PlayShieldAnim()
-    {
-        throw new NotImplementedException();
     }
 
     //shield의 반작용으로 인해 아래로 튕겨지는 것을 구현한 함수
@@ -292,6 +316,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator OverDriveCoroutine()
     {
         float elapsedTime = 0f;
+        IsOverdrive = !IsOverdrive;
+        animator.SetBool("IsOverdrive", IsOverdrive);
 
         //원래 수치 임시 변수에 저장하기
         int originAttackForce = attackForce;
@@ -326,6 +352,27 @@ public class PlayerController : MonoBehaviour
         shieldCoolTime = originShieldCoolTime;
         shieldForce = originShieldForce;
         jumpForce = originJumpForce;
+        IsOverdrive = !IsOverdrive;
+        animator.SetBool("IsOverdrive", IsOverdrive);
 
+    }
+
+    private void TakeDamage() {
+        if(!IsOverdrive) {
+            currentHp--;
+            if(currentHp <= 0) {
+                Die();
+                return;
+            }
+            Debug.Log("Player got hit! current Hp: " + currentHp);
+            animator.SetTrigger("TakeDamage");
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Too bad. Player died");
+        animator.SetTrigger("Die");
+        gameManager.GameOver();
     }
 }
