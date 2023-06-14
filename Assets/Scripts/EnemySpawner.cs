@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
 
     private float elapsedTime = 0f;
 
+    private float spawnYOffSetFromPlayer = 30f;
+
     private GameObject playerGo;
     // Start is called before the first frame update
     private string enemyPrefabPath = "Prefabs/Enemy/";
@@ -29,21 +31,31 @@ public class EnemySpawner : MonoBehaviour
         {
             enemyPrefabs.Add(loadedPrefab);
         }
+
+        appliedSpawnInterval = UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = playerGo.transform.position + new Vector3(0,30,0);
+        this.transform.position = playerGo.transform.position + new Vector3(0,spawnYOffSetFromPlayer,0);
+
+        elapsedTime += Time.deltaTime;
         TrySpawnEnemies();
     }
 
     private void TrySpawnEnemies()
     {
-        int randomNumber = UnityEngine.Random.Range(0, enemyPrefabs.Count);
-        appliedSpawnInterval = UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval);
+        if(elapsedTime >= appliedSpawnInterval) {
+            elapsedTime = 0f;
+            int randomNumber = UnityEngine.Random.Range(0, enemyPrefabs.Count);
+            appliedSpawnInterval = UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval);
+            Debug.Log("appliedSpawnInterval: " + appliedSpawnInterval);
+            GameObject instantiatedEnemy = Instantiate(enemyPrefabs[randomNumber]);
 
-        GameObject instantiatedEnemy = Instantiate(enemyPrefabs[randomNumber]);
-        instantiatedEnemy.transform.position = this.transform.position;
+            Debug.Log("Spawning enemy" + instantiatedEnemy.name);
+            instantiatedEnemy.transform.position = this.transform.position;
+        }
     }
 }
