@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("궁극기를 쓰기 위해 채워야하는 히트 수")]
     [SerializeField]
     private int requiredHitStacksForOverdrive = 5;
+    private int currentHitStacks = 0;
     
 
     //flag variables
@@ -118,6 +119,13 @@ public class PlayerController : MonoBehaviour
             currentJumpStacks = requiredJumpStacksForDash;
             canDash = true;
         } 
+    }
+
+    private void CheckCanOverdrive() {
+        if(currentHitStacks >= requiredHitStacksForOverdrive) {
+            currentHitStacks = requiredHitStacksForOverdrive;
+            canOverdrive = true;
+        }
     }
 
     private IEnumerator CheckShieldCoolTIme()
@@ -183,6 +191,8 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("player hit " + enemy.name);
                 enemy.transform.gameObject.GetComponent<DestructableObject>().TakeDamage(attackForce);
+                currentHitStacks++;
+                CheckCanOverdrive();
             }
 
             canAttack = !canAttack;
@@ -274,12 +284,18 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Overdrive() {
-        Debug.Log("Overdrive!");
-        StartCoroutine(OverDriveCoroutine());
+        if(canOverdrive) {
+            Debug.Log("Overdrive!");
+            StartCoroutine(OverDriveCoroutine());
+            currentHitStacks = 0;
+            canOverdrive = !canOverdrive;
+        }
     }
 
     IEnumerator OverDriveCoroutine()
     {
+        float elapsedTime = 0f;
+
         //원래 수치 임시 변수에 저장하기
         int originAttackForce = attackForce;
         float originAttackRange = attackRange;
@@ -300,6 +316,19 @@ public class PlayerController : MonoBehaviour
 
         jumpForce *= overdriveJumpForceIncreaseRate;
 
-        yield return null;
+        while(elapsedTime < overdriveDuration) {
+            elapsedTime += Time.deltaTime;
+            if(elapsedTime >= overdriveDuration) elapsedTime = overdriveDuration;
+            yield return null;
+        }
+
+        Debug.Log("End of Overdrive");
+        attackForce = originAttackForce;
+        attackRange = originAttackRange;
+        attackCoolTime = originAttackCoolTime;
+        shieldCoolTime = originShieldCoolTime;
+        shieldForce = originShieldForce;
+        jumpForce = originJumpForce;
+
     }
 }
