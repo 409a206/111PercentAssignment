@@ -109,7 +109,16 @@ public class PlayerController : MonoBehaviour
         distToGround = _col.bounds.extents.y;
 
     }
-    
+
+    private void Update() {
+        //IsJumping();
+    }
+
+    private void IsJumping()
+    {
+        throw new NotImplementedException();
+    }
+
     private void CheckCanDash()
     {
         if(currentJumpStacks >= requiredJumpStacksForDash) {
@@ -327,5 +336,9 @@ public class PlayerController : MonoBehaviour
         shieldForce = originShieldForce;
         jumpForce = originJumpForce;
 
+    }
+
+    private void TakeDamage() {
+        
     }
 }
