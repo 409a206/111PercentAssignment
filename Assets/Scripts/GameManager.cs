@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        // mainCamera = GameObject.FindObjectOfType<Camera>();
-        // playerController = GameObject.FindObjectOfType<PlayerController>();
-        // backgroundPrefab = Resources.Load("Prefabs/Background") as GameObject;
+        mainCamera = GameObject.FindObjectOfType<Camera>();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
+        backgroundPrefab = Resources.Load("Prefabs/Background") as GameObject;
     }
 
     // Update is called once per frame
