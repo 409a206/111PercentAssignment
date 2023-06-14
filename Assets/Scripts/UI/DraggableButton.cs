@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableButton : MonoBehaviour
+public class DraggableButton : EventTrigger
 {
     private RectTransform _rectTransform;
    
@@ -16,7 +16,7 @@ public class DraggableButton : MonoBehaviour
     [SerializeField]
     private float maxDist = 500f;
 
-    private bool canDrag = false;
+    private bool canDrag = true;
 
     //드래그하고 있는 거리
     private float dragDist = 0f;
@@ -42,31 +42,41 @@ public class DraggableButton : MonoBehaviour
         //모바일이 아닌PC나 유니티 에디터상에서 작동할 때는 터치 입력이 아닌 마우스로 입력받는다.
         
         #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER
-
+            //Debug.Log("UnityEditor!");
             HandleInput(Input.mousePosition);
 
         #endif
     }
 
+    
     private void HandleTouchInput()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     private void HandleInput(Vector3 mousePosition)
     {
-        mouseDragStartPos = mousePosition;
-    }
+        if(_buttonPressed && canDrag) {
+            
+            dragDist = (mousePosition.y - mouseDragStartPos.y) * 3f;
 
-    public void ButtonDown() {
+            _rectTransform.localPosition = new Vector3(_startPos.x, 
+                                                    _startPos.y + Mathf.Clamp(dragDist, 0, maxDist), 
+                                                    _startPos.z);
+        }
+    }
+    
+    public override void OnPointerDown(PointerEventData eventData) {
         _buttonPressed = true;
+        mouseDragStartPos = Input.mousePosition;
     }
-
-    public void ButtonUp() {
+    public override void OnPointerUp(PointerEventData eventData) {
         _buttonPressed = false;
 
         //버튼이 떼어졌을 때 터치패드와 촤표를 원래 지점으로 복귀시킵니다.
-        HandleInput(_startPos);
+        //HandleInput(_startPos);
+        _rectTransform.localPosition = _startPos;
+        mouseDragEndPos = Input.mousePosition;
     }
 
 /*     public override void OnBeginDrag(PointerEventData eventData)
