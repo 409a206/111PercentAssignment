@@ -323,7 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8acf5c8abc70f448d01ff54db3a1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  mainCamera: {fileID: 0}
+  playerController: {fileID: 0}
 --- !u!1 &210216950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,7 +1143,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 5
 --- !u!114 &924497991
 MonoBehaviour:

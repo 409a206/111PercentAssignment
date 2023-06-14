@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,23 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     //메인 카메라
-    public Camera camera;
+    public Camera mainCamera;
+    public PlayerController playerController;
     // Start is called before the first frame update
     void Awake()
     {
-        camera = GameObject.FindObjectOfType<Camera>();
+        mainCamera = GameObject.FindObjectOfType<Camera>();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        TryAddBackground();
+    }
+
+    private void TryAddBackground()
+    {
+       
     }
 }
