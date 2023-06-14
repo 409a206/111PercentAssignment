@@ -310,6 +310,8 @@ public class PlayerController : MonoBehaviour
     {
         float elapsedTime = 0f;
 
+        animator.SetBool("IsOverdrive", true);
+
         //원래 수치 임시 변수에 저장하기
         int originAttackForce = attackForce;
         float originAttackRange = attackRange;
@@ -343,6 +345,7 @@ public class PlayerController : MonoBehaviour
         shieldCoolTime = originShieldCoolTime;
         shieldForce = originShieldForce;
         jumpForce = originJumpForce;
+        animator.SetBool("IsOverdrive", false);
 
     }
 
