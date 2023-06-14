@@ -109,10 +109,7 @@ public class PlayerController : MonoBehaviour
         distToGround = _col.bounds.extents.y;
 
     }
-
-    void Update()
-    {}
-
+    
     private void CheckCanDash()
     {
         if(currentJumpStacks >= requiredJumpStacksForDash) {
@@ -250,7 +247,7 @@ public class PlayerController : MonoBehaviour
             GameObject instantiatedDashPrefab = Instantiate(Resources.Load("Prefabs/Dash") as GameObject);
             instantiatedDashPrefab.transform.position = this.transform.position;
 
-            gameManager.camera.GetComponent<CameraSmoothFollow>().Target = instantiatedDashPrefab;
+            gameManager.mainCamera.GetComponent<CameraSmoothFollow>().Target = instantiatedDashPrefab;
 
             StartCoroutine(DashCoroutine(instantiatedDashPrefab));
 
@@ -278,7 +275,7 @@ public class PlayerController : MonoBehaviour
 
         Destroy(dashPrefab);
         
-        gameManager.camera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
+        gameManager.mainCamera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
         
 
     }
