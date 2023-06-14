@@ -1773,7 +1773,7 @@ Animator:
   m_GameObject: {fileID: 667379090}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fcb6bb7e20cd0cd4ca2c1fb810e19697, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4efb9fdc0b2fe674bb54f3bb79c875d7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2826,6 +2826,7 @@ GameObject:
   - component: {fileID: 1402737818}
   - component: {fileID: 1402737820}
   - component: {fileID: 1402737819}
+  - component: {fileID: 1402737821}
   m_Layer: 5
   m_Name: ComboPanel
   m_TagString: Untagged
@@ -2892,6 +2893,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402737817}
   m_CullTransparentMesh: 1
+--- !u!114 &1402737821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402737817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35761e8856e112843b514b8a4d9713ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1404776966
 GameObject:
   m_ObjectHideFlags: 0
