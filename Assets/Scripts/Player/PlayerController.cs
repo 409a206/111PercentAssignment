@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
     private void CheckCurrentVelocity()
     {
         float velocity = this._rb.velocity.y;
-        Debug.Log("velocity.y: " + velocity);
+        //Debug.Log("velocity.y: " + velocity);
         animator.SetFloat("Velocity", velocity);
     }
 
