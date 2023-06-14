@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Field Variables
     //Component variables
     private Collider2D _col;
     private Rigidbody2D _rb;
@@ -46,11 +47,39 @@ public class PlayerController : MonoBehaviour
     private int requiredJumpStacksForDash = 3;
     private int currentJumpStacks = 0;
 
+    [Tooltip("궁극기 사용시 공격력 증가 배율")]
+    [SerializeField]
+    private int overdriveAttackForceIncreaseRate = 2;
+    [Tooltip("궁극기 사용시 공격 범위 증가 배율")]
+    [SerializeField]
+    private float overdriveAttackRangeIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 공격 쿨타임 감소 배율")]
+    [SerializeField]
+    private float overdriveAttackCoolTimeDecreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 점프력 증가 배율")]
+    [SerializeField]
+    private float overdriveJumpForceIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 쉴드력 증가 배율")]
+    [SerializeField]
+    private float overdriveshieldForceIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 쉴드쿨타임 증가 배율")]
+    [SerializeField]
+    private float overdriveshieldCoolTimeDecreaseRate = 2.0f;
+
+    [SerializeField]
+    private float overdriveDuration = 5.0f;
+
+    [Tooltip("궁극기를 쓰기 위해 채워야하는 히트 수")]
+    [SerializeField]
+    private int requiredHitStacksForOverdrive = 5;
+    private int currentHitStacks = 0;
+    
 
     //flag variables
     private bool canAttack = true;
     private bool canShield = true;
     private bool canDash = false;
+    private bool canOverdrive = false;
 
     //derived data variables
     float distToGround;
@@ -69,6 +98,7 @@ public class PlayerController : MonoBehaviour
     
     private GameManager gameManager;
 
+    #endregion
    
     void Start()
     {
@@ -89,6 +119,13 @@ public class PlayerController : MonoBehaviour
             currentJumpStacks = requiredJumpStacksForDash;
             canDash = true;
         } 
+    }
+
+    private void CheckCanOverdrive() {
+        if(currentHitStacks >= requiredHitStacksForOverdrive) {
+            currentHitStacks = requiredHitStacksForOverdrive;
+            canOverdrive = true;
+        }
     }
 
     private IEnumerator CheckShieldCoolTIme()
@@ -154,6 +191,8 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("player hit " + enemy.name);
                 enemy.transform.gameObject.GetComponent<DestructableObject>().TakeDamage(attackForce);
+                currentHitStacks++;
+                CheckCanOverdrive();
             }
 
             canAttack = !canAttack;
@@ -241,6 +280,55 @@ public class PlayerController : MonoBehaviour
         
         gameManager.camera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
         
+
+    }
+
+    public void Overdrive() {
+        if(canOverdrive) {
+            Debug.Log("Overdrive!");
+            StartCoroutine(OverDriveCoroutine());
+            currentHitStacks = 0;
+            canOverdrive = !canOverdrive;
+        }
+    }
+
+    IEnumerator OverDriveCoroutine()
+    {
+        float elapsedTime = 0f;
+
+        //원래 수치 임시 변수에 저장하기
+        int originAttackForce = attackForce;
+        float originAttackRange = attackRange;
+        float originAttackCoolTime = attackCoolTime;
+
+        float originShieldCoolTime = shieldCoolTime;
+        float originShieldForce = shieldForce;
+
+        float originJumpForce = jumpForce;
+
+        //오버드라이브 수치 적용
+        attackForce *= overdriveAttackForceIncreaseRate;
+        attackRange *= overdriveAttackRangeIncreaseRate;
+        attackCoolTime /= overdriveAttackCoolTimeDecreaseRate;
+
+        shieldCoolTime /= overdriveshieldCoolTimeDecreaseRate;
+        shieldForce *= overdriveshieldForceIncreaseRate;
+
+        jumpForce *= overdriveJumpForceIncreaseRate;
+
+        while(elapsedTime < overdriveDuration) {
+            elapsedTime += Time.deltaTime;
+            if(elapsedTime >= overdriveDuration) elapsedTime = overdriveDuration;
+            yield return null;
+        }
+
+        Debug.Log("End of Overdrive");
+        attackForce = originAttackForce;
+        attackRange = originAttackRange;
+        attackCoolTime = originAttackCoolTime;
+        shieldCoolTime = originShieldCoolTime;
+        shieldForce = originShieldForce;
+        jumpForce = originJumpForce;
 
     }
 }
