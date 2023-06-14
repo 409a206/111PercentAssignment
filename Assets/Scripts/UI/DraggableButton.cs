@@ -13,7 +13,7 @@ public class DraggableButton : EventTrigger
 
     //위로 드래그할 수 있는 최대값
     [SerializeField]
-    private float maxDist = 1f;
+    private float maxDist = 500f;
 
     private bool canDrag = true;
 
@@ -27,7 +27,8 @@ public class DraggableButton : EventTrigger
     {
         _rectTransform = GetComponent<RectTransform>();
        
-        _startPos = _rectTransform.localPosition;    
+        _startPos = _rectTransform.localPosition;
+        //Debug.Log("_startPos: " +_startPos);    
     }
 
     // Update is called once per frame
@@ -45,14 +46,20 @@ public class DraggableButton : EventTrigger
         base.OnDrag(eventData);
         if(canDrag) {
             dragDist = Input.mousePosition.y - mouseDragStartPos.y;
-            //Debug.Log(dragDist);
+            // if(dragDist >= maxDist) dragDist = maxDist;
+            // if(dragDist <= 0) dragDist = 0;
+
+            _rectTransform.localPosition = new Vector3(_startPos.x, 
+                                                    _startPos.y + Mathf.Clamp(dragDist, 0, maxDist), 
+                                                    _startPos.z);
+
         }
     }
 
     public override void OnEndDrag(PointerEventData eventData)
     {
         base.OnEndDrag(eventData);
-        this.transform.localPosition = _startPos;
+        _rectTransform.localPosition = _startPos;
         mouseDragEndPos = Input.mousePosition;
     }
 
