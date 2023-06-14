@@ -51,7 +51,13 @@ public class PlayerController : MonoBehaviour
     private float dashSpeed = 2.0f;
     [SerializeField]
     private int requiredJumpStacksForDash = 3;
+    public int RequiredJumpStacksForDash {
+        get{return requiredJumpStacksForDash;}
+    }
     private int currentJumpStacks = 0;
+    public int CurrentJumpStacks {
+        get{return currentJumpStacks;}
+    }
 
     [Tooltip("궁극기 사용시 공격력 증가 배율")]
     [SerializeField]
@@ -78,7 +84,13 @@ public class PlayerController : MonoBehaviour
     [Tooltip("궁극기를 쓰기 위해 채워야하는 히트 수")]
     [SerializeField]
     private int requiredHitStacksForOverdrive = 5;
+    public int RequiredHitStacksForOverdrive {
+        get{return requiredHitStacksForOverdrive;}
+    }
     private int currentHitStacks = 0;
+    public int CurrentHitStacks {
+        get{return currentHitStacks;}
+    }
     
 
     //flag variables
