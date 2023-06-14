@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class DraggableButton : EventTrigger
 {
     private RectTransform _rectTransform;
-    
-     //터치 입력 중에 방향 컨트롤러의 영역 안에 있는 입력을 구분하기 위한 아이디
+    //터치 입력 중에 방향 컨트롤러의 영역 안에 있는 입력을 구분하기 위한 아이디
     private int _touchId = -1;
 
+   
     //입력이 시작되는 좌표
     private Vector3 _startPos = Vector3.zero;
 
@@ -58,8 +58,7 @@ public class DraggableButton : EventTrigger
             int i = 0;
         //터치 입력은 한 번에 여러 개가 들어올 수 있습니다. 터치가 하나 이상 입력되면 실행되도록 합니다.
         if(Input.touchCount > 0) {
-            //adjustment needed
-            //각각의 터치 입력을 하나씩 조회합니다.
+             //각각의 터치 입력을 하나씩 조회합니다.
             foreach (Touch touch in Input.touches) {
                 //터치 아이디(touchId)를 매기기 위한 번호를 1 증가시킵니다.
                 i++;
@@ -84,7 +83,6 @@ public class DraggableButton : EventTrigger
                         HandleInput(touchPos);
                     }
                 }
-
                 //터치 입력이 끝났는데
                 if(touch.phase == TouchPhase.Ended) {
                     //입력받고자 했던 터치 아이디라면
@@ -93,8 +91,10 @@ public class DraggableButton : EventTrigger
                         _touchId = -1;
                     }
                 }
+            }
+
+
         }
-        //end adjustment needed
     }
 
     private void HandleInput(Vector3 mousePosition)
