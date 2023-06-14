@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("궁극기 사용시 공격력 증가 배율")]
     [SerializeField]
-    private float overdriveAttackForceIncreaseRate = 2.0f;
+    private int overdriveAttackForceIncreaseRate = 2;
     [Tooltip("궁극기 사용시 공격 범위 증가 배율")]
     [SerializeField]
     private float overdriveAttackRangeIncreaseRate = 2.0f;
@@ -62,6 +62,12 @@ public class PlayerController : MonoBehaviour
     [Tooltip("궁극기 사용시 쉴드력 증가 배율")]
     [SerializeField]
     private float overdriveshieldForceIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 쉴드쿨타임 증가 배율")]
+    [SerializeField]
+    private float overdriveshieldCoolTimeDecreaseRate = 2.0f;
+
+    [SerializeField]
+    private float overdriveDuration = 5.0f;
 
     [Tooltip("궁극기를 쓰기 위해 채워야하는 히트 수")]
     [SerializeField]
@@ -113,7 +119,7 @@ public class PlayerController : MonoBehaviour
             canDash = true;
         } 
     }
-    
+
     private IEnumerator CheckShieldCoolTIme()
     {
         float elapsedTime = 0f;
@@ -269,5 +275,31 @@ public class PlayerController : MonoBehaviour
 
     public void Overdrive() {
         Debug.Log("Overdrive!");
+        StartCoroutine(OverDriveCoroutine());
+    }
+
+    IEnumerator OverDriveCoroutine()
+    {
+        //원래 수치 임시 변수에 저장하기
+        int originAttackForce = attackForce;
+        float originAttackRange = attackRange;
+        float originAttackCoolTime = attackCoolTime;
+
+        float originShieldCoolTime = shieldCoolTime;
+        float originShieldForce = shieldForce;
+
+        float originJumpForce = jumpForce;
+
+        //오버드라이브 수치 적용
+        attackForce *= overdriveAttackForceIncreaseRate;
+        attackRange *= overdriveAttackRangeIncreaseRate;
+        attackCoolTime /= overdriveAttackCoolTimeDecreaseRate;
+
+        shieldCoolTime /= overdriveshieldCoolTimeDecreaseRate;
+        shieldForce *= overdriveshieldForceIncreaseRate;
+
+        jumpForce *= overdriveJumpForceIncreaseRate;
+
+        yield return null;
     }
 }
