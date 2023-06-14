@@ -17,15 +17,15 @@ public class DraggableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     //위로 드래그할 수 있는 최대값
     [SerializeField]
-    private float maxDist = 500f;
+    protected float maxDist = 500f;
 
     protected bool canDrag = false;
 
     //드래그하고 있는 거리
-    private float dragDist = 0f;
+    protected float dragDist = 0f;
     private Vector2 mouseDragStartPos = Vector2.zero;
     private Vector2 mouseDragEndPos = Vector2.zero;
-    private bool _buttonPressed = false;
+    protected bool _buttonPressed = false;
 
     protected UIController uIController;
     [SerializeField]
@@ -44,7 +44,6 @@ public class DraggableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         gaugeMeter.SetActive(false);   
     }
-
     private void FixedUpdate() {
         
         //모바일에서는 터치패드 방식으로 여러 터치 입력을 받아 처리합니다.
@@ -128,6 +127,9 @@ public class DraggableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         //HandleInput(_startPos);
         _rectTransform.localPosition = _startPos;
         mouseDragEndPos = Input.mousePosition;
+    }
+    public virtual void TryActivate() {
+        dragDist = 0f;
     }
 
 #region legacy

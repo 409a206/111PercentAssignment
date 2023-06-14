@@ -2819,6 +2819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDist: 500
   gaugeMeter: {fileID: 2034577016}
+  fillImage: {fileID: 302490652}
 --- !u!1 &1440001416
 GameObject:
   m_ObjectHideFlags: 0
@@ -3121,6 +3122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDist: 500
   gaugeMeter: {fileID: 322056542}
+  fillImage: {fileID: 72718274}
 --- !u!1 &1589198754
 GameObject:
   m_ObjectHideFlags: 0

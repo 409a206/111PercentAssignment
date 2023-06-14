@@ -10,5 +10,18 @@ public class AttackButton : DraggableButton
         gaugeMeter.SetActive(canDrag);
         fillImage.GetComponent<Image>().fillAmount = (float)uIController.gameManager.playerController.CurrentHitStacks 
                                                     / (float)uIController.gameManager.playerController.RequiredHitStacksForOverdrive;
+
+        if(dragDist >= maxDist - 10f && !_buttonPressed) TryActivate();
+        //Debug.Log(dragDist);
+    }
+
+    public override void TryActivate()
+    {
+        Overdrive();
+        base.TryActivate();
+    }
+
+    private void Overdrive() {
+        uIController.gameManager.playerController.Overdrive(); 
     }
 }
