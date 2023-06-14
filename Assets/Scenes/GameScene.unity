@@ -2594,7 +2594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
-  maxDist: 1000
+  maxDist: 500
 --- !u!1 &1588935033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,7 +2742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
-  maxDist: 1000
+  maxDist: 500
 --- !u!1 &1589198754
 GameObject:
   m_ObjectHideFlags: 0
