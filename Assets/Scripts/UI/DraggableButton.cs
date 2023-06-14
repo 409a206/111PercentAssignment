@@ -8,7 +8,10 @@ using UnityEngine.UI;
 public class DraggableButton : EventTrigger
 {
     private RectTransform _rectTransform;
-   
+    
+     //터치 입력 중에 방향 컨트롤러의 영역 안에 있는 입력을 구분하기 위한 아이디
+    private int _touchId = -1;
+
     //입력이 시작되는 좌표
     private Vector3 _startPos = Vector3.zero;
 
@@ -51,7 +54,47 @@ public class DraggableButton : EventTrigger
     
     private void HandleTouchInput()
     {
-        //throw new NotImplementedException();
+        //터치 아이디(touchId)를 매기기 위한 번호입니다.
+            int i = 0;
+        //터치 입력은 한 번에 여러 개가 들어올 수 있습니다. 터치가 하나 이상 입력되면 실행되도록 합니다.
+        if(Input.touchCount > 0) {
+            //adjustment needed
+            //각각의 터치 입력을 하나씩 조회합니다.
+            foreach (Touch touch in Input.touches) {
+                //터치 아이디(touchId)를 매기기 위한 번호를 1 증가시킵니다.
+                i++;
+
+                //현재 터치 입력의 x,y 좌표를 구합니다.
+                Vector3 touchPos = new Vector3(touch.position.x, touch.position.y);
+
+                //터치 입력이 방금 시작되었다면, 혹은 TouchPhase.Began이면,
+                if(touch.phase == TouchPhase.Began) {
+                    //그리고 터치의 좌표가 현재 방향키 범위 내에 있다면
+                    if(touch.position.x <= (_startPos.x + _dragRadius)) {
+                        //이 터치 아이디를 기준으로 방향 컨트롤러를 조작하도록 합니다.
+                        _touchId = i;
+                    }
+                }
+
+                //터치 입력이 움직였다거나, 가만히 있는 상황이라면
+                if(touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) {
+                    //터치 아이디로 지정된 경우에만
+                    if(_touchId == i) {
+                        //좌표 입력을 받아들입니다.
+                        HandleInput(touchPos);
+                    }
+                }
+
+                //터치 입력이 끝났는데
+                if(touch.phase == TouchPhase.Ended) {
+                    //입력받고자 했던 터치 아이디라면
+                    if(_touchId == i) {
+                        //터치 아이디를 해제합니다.
+                        _touchId = -1;
+                    }
+                }
+        }
+        //end adjustment needed
     }
 
     private void HandleInput(Vector3 mousePosition)
@@ -65,7 +108,7 @@ public class DraggableButton : EventTrigger
                                                     _startPos.z);
         }
     }
-    
+
     public override void OnPointerDown(PointerEventData eventData) {
         _buttonPressed = true;
         mouseDragStartPos = Input.mousePosition;
@@ -79,6 +122,7 @@ public class DraggableButton : EventTrigger
         mouseDragEndPos = Input.mousePosition;
     }
 
+#region legacy
 /*     public override void OnBeginDrag(PointerEventData eventData)
     {
         base.OnBeginDrag(eventData);
@@ -104,5 +148,5 @@ public class DraggableButton : EventTrigger
         _rectTransform.localPosition = _startPos;
         mouseDragEndPos = Input.mousePosition;
     } */
-
+#endregion
 }
