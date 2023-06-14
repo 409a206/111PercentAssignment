@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableButton : EventTrigger
+public class DraggableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private RectTransform _rectTransform;
     //터치 입력 중에 방향 컨트롤러의 영역 안에 있는 입력을 구분하기 위한 아이디
@@ -28,6 +28,8 @@ public class DraggableButton : EventTrigger
     private bool _buttonPressed = false;
 
     protected UIController uIController;
+    [SerializeField]
+    protected GameObject gaugeMeter;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,10 +38,11 @@ public class DraggableButton : EventTrigger
         uIController = GameObject.FindObjectOfType<UIController>();
        
         _startPos = _rectTransform.localPosition;
-        //Debug.Log("_startPos: " +_startPos);    
-    }
+        //Debug.Log("_startPos: " +_startPos); 
 
-    // Update is called once per frame
+        gaugeMeter.SetActive(false);   
+    }
+    
     private void FixedUpdate() {
         
         //모바일에서는 터치패드 방식으로 여러 터치 입력을 받아 처리합니다.
@@ -112,11 +115,11 @@ public class DraggableButton : EventTrigger
         }
     }
 
-    public override void OnPointerDown(PointerEventData eventData) {
+    public void OnPointerDown(PointerEventData eventData) {
         _buttonPressed = true;
         mouseDragStartPos = Input.mousePosition;
     }
-    public override void OnPointerUp(PointerEventData eventData) {
+    public void OnPointerUp(PointerEventData eventData) {
         _buttonPressed = false;
 
         //버튼이 떼어졌을 때 터치패드와 촤표를 원래 지점으로 복귀시킵니다.

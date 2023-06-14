@@ -5,6 +5,8 @@ using UnityEngine;
 public class JumpButton : DraggableButton
 {
     private void Update() {
+        
         canDrag = uIController.gameManager.playerController.CanDash;
+        gaugeMeter.SetActive(canDrag);
     }
 }
