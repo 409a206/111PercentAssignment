@@ -17,10 +17,8 @@ public class CameraSmoothFollow : MonoBehaviour
     public float speed = 2.0f;
 
     //derived variables
-
     //카메라가 가질 수 있는 최소 y좌표
     private float minY;
-
 
     private void Awake() {
         

@@ -109,10 +109,7 @@ public class PlayerController : MonoBehaviour
         distToGround = _col.bounds.extents.y;
 
     }
-
-    void Update()
-    {}
-
+    
     private void CheckCanDash()
     {
         if(currentJumpStacks >= requiredJumpStacksForDash) {
