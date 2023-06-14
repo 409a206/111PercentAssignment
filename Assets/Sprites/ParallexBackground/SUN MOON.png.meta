@@ -101,6 +101,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -367,18 +379,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SUN MOON_1: 323225249
-      SUN MOON_6: -1004194789
-      SUN MOON_3: -1066983928
-      SUN MOON_10: 400248960
-      SUN MOON_2: -1476748334
-      SUN MOON_4: -1125555559
-      SUN MOON_11: -1642366924
       SUN MOON_0: 2047466151
-      SUN MOON_7: -2047042495
-      SUN MOON_9: -1828220291
+      SUN MOON_1: 323225249
+      SUN MOON_10: 400248960
+      SUN MOON_11: -1642366924
+      SUN MOON_2: -1476748334
+      SUN MOON_3: -1066983928
+      SUN MOON_4: -1125555559
       SUN MOON_5: -1109145817
+      SUN MOON_6: -1004194789
+      SUN MOON_7: -2047042495
       SUN MOON_8: 577512545
+      SUN MOON_9: -1828220291
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

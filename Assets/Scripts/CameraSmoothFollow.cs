@@ -25,7 +25,7 @@ public class CameraSmoothFollow : MonoBehaviour
         _cam = GetComponent<Camera>();
 
         var backgroundBounds = 
-            GameObject.Find("Background").GetComponent<Renderer>().bounds;
+            GameObject.Find("BaseBackground").GetComponent<Renderer>().bounds;
 
         //월드 좌표계에서 카메라가 볼 수 있는 경계를 얻음
         var camTopLeft = _cam.ViewportToWorldPoint(new Vector3(0,0,0));
