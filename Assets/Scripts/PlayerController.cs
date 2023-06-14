@@ -115,6 +115,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update() {
         CheckCurrentVelocity();
+        CheckIsAir();
+    }
+
+    private void CheckIsAir()
+    {
+        animator.SetBool("IsAir", !IsGrounded());
     }
 
     private void CheckCurrentVelocity()
@@ -225,11 +231,6 @@ public class PlayerController : MonoBehaviour
         if(shieldPoint != null) Gizmos.DrawWireSphere(shieldPoint.position, shieldRange);
     }
 
-    private IEnumerator PlayAttackAnim()
-    {
-        throw new NotImplementedException();
-    }
-
     public void Shield() {
         //Debug.Log("Shield!");
         
@@ -248,11 +249,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(CheckShieldCoolTIme());
             //StartCoroutine(PlayShieldAnim());
         }
-    }
-
-    private string PlayShieldAnim()
-    {
-        throw new NotImplementedException();
     }
 
     //shield의 반작용으로 인해 아래로 튕겨지는 것을 구현한 함수
