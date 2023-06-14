@@ -30,6 +30,8 @@ public class DraggableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     protected UIController uIController;
     [SerializeField]
     protected GameObject gaugeMeter;
+    [SerializeField]
+    protected GameObject fillImage;
 
     // Start is called before the first frame update
     void Awake()
@@ -42,7 +44,7 @@ public class DraggableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         gaugeMeter.SetActive(false);   
     }
-    
+
     private void FixedUpdate() {
         
         //모바일에서는 터치패드 방식으로 여러 터치 입력을 받아 처리합니다.
