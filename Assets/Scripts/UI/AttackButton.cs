@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class AttackButton : DraggableButton
 {
-    
+    private void Update() {
+        canDrag = uIController.gameManager.playerController.CanOverdrive;
+    }
 }

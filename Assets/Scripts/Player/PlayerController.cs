@@ -86,7 +86,13 @@ public class PlayerController : MonoBehaviour
     private bool isAttackRight = true;
     private bool canShield = true;
     private bool canDash = false;
+    public bool CanDash{
+        get{return canDash;}
+    }
     private bool canOverdrive = false;
+    public bool CanOverdrive{
+        get{return canOverdrive;}
+    }
     private bool IsOverdrive = false;
 
     //derived data variables

@@ -19,7 +19,7 @@ public class DraggableButton : EventTrigger
     [SerializeField]
     private float maxDist = 500f;
 
-    private bool canDrag = true;
+    protected bool canDrag = false;
 
     //드래그하고 있는 거리
     private float dragDist = 0f;
@@ -27,10 +27,13 @@ public class DraggableButton : EventTrigger
     private Vector2 mouseDragEndPos = Vector2.zero;
     private bool _buttonPressed = false;
 
+    protected UIController uIController;
+
     // Start is called before the first frame update
     void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
+        uIController = GameObject.FindObjectOfType<UIController>();
        
         _startPos = _rectTransform.localPosition;
         //Debug.Log("_startPos: " +_startPos);    
@@ -41,21 +44,21 @@ public class DraggableButton : EventTrigger
         
         //모바일에서는 터치패드 방식으로 여러 터치 입력을 받아 처리합니다.
         
-        HandleTouchInput();
+        //HandleTouchInput();
         //모바일이 아닌PC나 유니티 에디터상에서 작동할 때는 터치 입력이 아닌 마우스로 입력받는다.
         
-        #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER
+        //#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER
             //Debug.Log("UnityEditor!");
             HandleInput(Input.mousePosition);
 
-        #endif
+        //#endif
     }
 
     
-    private void HandleTouchInput()
+    /* private void HandleTouchInput()
     {
         //터치 아이디(touchId)를 매기기 위한 번호입니다.
-            int i = 0;
+        int i = 0;
         //터치 입력은 한 번에 여러 개가 들어올 수 있습니다. 터치가 하나 이상 입력되면 실행되도록 합니다.
         if(Input.touchCount > 0) {
              //각각의 터치 입력을 하나씩 조회합니다.
@@ -95,7 +98,7 @@ public class DraggableButton : EventTrigger
 
 
         }
-    }
+    } */
 
     private void HandleInput(Vector3 mousePosition)
     {
