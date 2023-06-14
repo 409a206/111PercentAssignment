@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour
 
     //adjustable data variables
     [SerializeField]
+    private int maxHp = 10;
+    [SerializeField]
+    private int currentHp;
+
+    [SerializeField]
     private float jumpForce = 1;
     [SerializeField]
     private int attackForce = 1;
@@ -82,6 +87,7 @@ public class PlayerController : MonoBehaviour
     private bool canShield = true;
     private bool canDash = false;
     private bool canOverdrive = false;
+    private bool IsOverdrive = false;
 
     //derived data variables
     float distToGround;
@@ -104,6 +110,7 @@ public class PlayerController : MonoBehaviour
    
     void Start()
     {
+        currentHp = maxHp;
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
@@ -309,8 +316,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator OverDriveCoroutine()
     {
         float elapsedTime = 0f;
-
-        animator.SetBool("IsOverdrive", true);
+        IsOverdrive = !IsOverdrive;
+        animator.SetBool("IsOverdrive", IsOverdrive);
 
         //원래 수치 임시 변수에 저장하기
         int originAttackForce = attackForce;
@@ -345,11 +352,27 @@ public class PlayerController : MonoBehaviour
         shieldCoolTime = originShieldCoolTime;
         shieldForce = originShieldForce;
         jumpForce = originJumpForce;
-        animator.SetBool("IsOverdrive", false);
+        IsOverdrive = !IsOverdrive;
+        animator.SetBool("IsOverdrive", IsOverdrive);
 
     }
 
     private void TakeDamage() {
+        if(!IsOverdrive) {
+            currentHp--;
+            if(currentHp <= 0) {
+                Die();
+                return;
+            }
+            Debug.Log("Player got hit! current Hp: " + currentHp);
+            animator.SetTrigger("TakeDamage");
+        }
+    }
 
+    private void Die()
+    {
+        Debug.Log("Too bad. Player died");
+        animator.SetTrigger("Die");
+        gameManager.GameOver();
     }
 }
