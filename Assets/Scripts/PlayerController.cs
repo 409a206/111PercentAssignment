@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     //Component variables
     private Collider2D _col;
     private Rigidbody2D _rb;
+    private Animator animator;
 
     //adjustable data variables
     [SerializeField]
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour
 
     //flag variables
     private bool canAttack = true;
+    private bool isAttackRight = true;
     private bool canShield = true;
     private bool canDash = false;
     private bool canOverdrive = false;
@@ -104,6 +106,7 @@ public class PlayerController : MonoBehaviour
     {
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
         gameManager = FindObjectOfType<GameManager>();
 
         distToGround = _col.bounds.extents.y;
@@ -111,12 +114,14 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update() {
-        //IsJumping();
+        CheckCurrentVelocity();
     }
 
-    private void IsJumping()
+    private void CheckCurrentVelocity()
     {
-        throw new NotImplementedException();
+        float velocity = this._rb.velocity.y;
+        Debug.Log("velocity.y: " + velocity);
+        animator.SetFloat("Velocity", velocity);
     }
 
     private void CheckCanDash()
@@ -191,6 +196,12 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("attack!");
         
         if(canAttack) {
+            if(isAttackRight) {
+                animator.SetTrigger("AttackRight");
+            } else {
+                animator.SetTrigger("AttackLeft");
+            }
+            isAttackRight = !isAttackRight;
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, destructableObjectLayer);
 
             foreach (Collider2D enemy in hitEnemies)
@@ -223,6 +234,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Shield!");
         
         if(canShield) {
+            animator.SetTrigger("Shield");
             bool isBounceOffFunctionCalled = false;
 
             Collider2D blockedEnemy = Physics2D.OverlapCircle(shieldPoint.position, shieldRange, destructableObjectLayer);
@@ -339,6 +351,6 @@ public class PlayerController : MonoBehaviour
     }
 
     private void TakeDamage() {
-        
+
     }
 }
