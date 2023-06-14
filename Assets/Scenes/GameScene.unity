@@ -231,7 +231,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 924497991}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Dash
+        m_MethodName: Overdrive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Field Variables
     //Component variables
     private Collider2D _col;
     private Rigidbody2D _rb;
@@ -46,11 +47,32 @@ public class PlayerController : MonoBehaviour
     private int requiredJumpStacksForDash = 3;
     private int currentJumpStacks = 0;
 
+    [Tooltip("궁극기 사용시 공격력 증가 배율")]
+    [SerializeField]
+    private float overdriveAttackForceIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 공격 범위 증가 배율")]
+    [SerializeField]
+    private float overdriveAttackRangeIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 공격 쿨타임 감소 배율")]
+    [SerializeField]
+    private float overdriveAttackCoolTimeDecreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 점프력 증가 배율")]
+    [SerializeField]
+    private float overdriveJumpForceIncreaseRate = 2.0f;
+    [Tooltip("궁극기 사용시 쉴드력 증가 배율")]
+    [SerializeField]
+    private float overdriveshieldForceIncreaseRate = 2.0f;
+
+    [Tooltip("궁극기를 쓰기 위해 채워야하는 히트 수")]
+    [SerializeField]
+    private int requiredHitStacksForOverdrive = 5;
+    
 
     //flag variables
     private bool canAttack = true;
     private bool canShield = true;
     private bool canDash = false;
+    private bool canOverdrive = false;
 
     //derived data variables
     float distToGround;
@@ -69,6 +91,7 @@ public class PlayerController : MonoBehaviour
     
     private GameManager gameManager;
 
+    #endregion
    
     void Start()
     {
@@ -90,7 +113,7 @@ public class PlayerController : MonoBehaviour
             canDash = true;
         } 
     }
-
+    
     private IEnumerator CheckShieldCoolTIme()
     {
         float elapsedTime = 0f;
@@ -242,5 +265,9 @@ public class PlayerController : MonoBehaviour
         gameManager.camera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
         
 
+    }
+
+    public void Overdrive() {
+        Debug.Log("Overdrive!");
     }
 }
