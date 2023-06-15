@@ -22,12 +22,6 @@ public class ComboManager : MonoBehaviour
         ComboText.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void TriggerCombo() {
 
         if(ComboText.enabled == false) ComboText.enabled = true;
@@ -39,7 +33,6 @@ public class ComboManager : MonoBehaviour
     }
     private void ResetCombo() {
         currentCombo = 0;
-        //StopCoroutine(ComboCounterCoroutine());
     }
 
     IEnumerator ComboCounterCoroutine() {
