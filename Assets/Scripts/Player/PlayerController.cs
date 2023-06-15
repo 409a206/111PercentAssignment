@@ -408,6 +408,9 @@ public class PlayerController : MonoBehaviour
             gameManager.uIController.playerStatusPanel.playerHpFillImage.fillAmount = (float)currentHp / (float) maxHp;
             animator.SetTrigger("TakeDamage");
             gameManager.uIController.playerStatusPanel.hpBarAnimator.SetTrigger("TakeDamage");
+
+            int randomInt = UnityEngine.Random.Range(1,4);
+            gameManager.soundManager.PlaySE("snd_hurt_" + randomInt);
         }
     }
 
@@ -416,6 +419,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Too bad. Player died");
         animator.SetTrigger("Die");
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("DestructableObjects"));
+        gameManager.soundManager.PlaySE("snd_die");
         StopAllCoroutines();
         gameManager.GameOver();
     }
