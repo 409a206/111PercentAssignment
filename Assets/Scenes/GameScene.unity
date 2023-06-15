@@ -4819,6 +4819,16 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 28f799d1af5076542916b1bfd2dacb4a, type: 3}
   - name: snd_enemy_down
     clip: {fileID: 8300000, guid: c95fc065a58e0474083e62cc3c16cde0, type: 3}
+  - name: snd_enemy_down
+    clip: {fileID: 8300000, guid: c95fc065a58e0474083e62cc3c16cde0, type: 3}
+  - name: snd_enemy_down
+    clip: {fileID: 8300000, guid: c95fc065a58e0474083e62cc3c16cde0, type: 3}
+  - name: snd_enemy_down
+    clip: {fileID: 8300000, guid: c95fc065a58e0474083e62cc3c16cde0, type: 3}
+  - name: snd_enemy_down
+    clip: {fileID: 8300000, guid: c95fc065a58e0474083e62cc3c16cde0, type: 3}
+  - name: snd_enemy_down
+    clip: {fileID: 8300000, guid: c95fc065a58e0474083e62cc3c16cde0, type: 3}
   BGMSounds: []
 --- !u!82 &1801510772
 AudioSource:
