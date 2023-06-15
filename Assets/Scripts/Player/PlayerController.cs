@@ -125,6 +125,16 @@ public class PlayerController : MonoBehaviour
     
     private GameManager gameManager;
 
+    //variables for bugFix!! => need to be changed
+    int originAttackForce;
+    float originAttackRange;
+    float originAttackCoolTime;
+
+    float originShieldCoolTime;
+    float originShieldForce;
+
+    float originJumpForce;
+
     #endregion
    
     void Start()
@@ -136,6 +146,7 @@ public class PlayerController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
 
         distToGround = _col.bounds.extents.y;
+        InitiateStatus();
 
     }
 
@@ -347,6 +358,8 @@ public class PlayerController : MonoBehaviour
         if(canOverdrive) {
             gameManager.soundManager.PlaySE("snd_overdrive");
             Debug.Log("Overdrive!");
+            StopCoroutine(OverDriveCoroutine());
+            ResetStatus();
             StartCoroutine(OverDriveCoroutine());
             currentHitStacks = 0;
             canOverdrive = !canOverdrive;
@@ -360,14 +373,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsOverdrive", IsOverdrive);
 
         //원래 수치 임시 변수에 저장하기
-        int originAttackForce = attackForce;
-        float originAttackRange = attackRange;
-        float originAttackCoolTime = attackCoolTime;
+        // int originAttackForce = attackForce;
+        // float originAttackRange = attackRange;
+        // float originAttackCoolTime = attackCoolTime;
 
-        float originShieldCoolTime = shieldCoolTime;
-        float originShieldForce = shieldForce;
+        // float originShieldCoolTime = shieldCoolTime;
+        // float originShieldForce = shieldForce;
 
-        float originJumpForce = jumpForce;
+        // float originJumpForce = jumpForce;
 
         //오버드라이브 수치 적용
         attackForce *= overdriveAttackForceIncreaseRate;
@@ -386,14 +399,15 @@ public class PlayerController : MonoBehaviour
         }
 
         Debug.Log("End of Overdrive");
-        attackForce = originAttackForce;
-        attackRange = originAttackRange;
-        attackCoolTime = originAttackCoolTime;
-        shieldCoolTime = originShieldCoolTime;
-        shieldForce = originShieldForce;
-        jumpForce = originJumpForce;
-        IsOverdrive = !IsOverdrive;
-        animator.SetBool("IsOverdrive", IsOverdrive);
+        ResetStatus();
+        // attackForce = originAttackForce;
+        // attackRange = originAttackRange;
+        // attackCoolTime = originAttackCoolTime;
+        // shieldCoolTime = originShieldCoolTime;
+        // shieldForce = originShieldForce;
+        // jumpForce = originJumpForce;
+        // IsOverdrive = !IsOverdrive;
+        // animator.SetBool("IsOverdrive", IsOverdrive);
 
     }
 
@@ -422,5 +436,25 @@ public class PlayerController : MonoBehaviour
         gameManager.soundManager.PlaySE("snd_die");
         StopAllCoroutines();
         gameManager.GameOver();
+    }
+    private void InitiateStatus() {
+        originAttackForce = attackForce;
+        originAttackRange = attackRange;
+        originAttackCoolTime = attackCoolTime;
+
+        originShieldCoolTime = shieldCoolTime;
+        originShieldForce = shieldForce;
+
+        originJumpForce = jumpForce;
+    }
+    private void ResetStatus() {
+        attackForce = originAttackForce;
+        attackRange = originAttackRange;
+        attackCoolTime = originAttackCoolTime;
+        shieldCoolTime = originShieldCoolTime;
+        shieldForce = originShieldForce;
+        jumpForce = originJumpForce;
+        IsOverdrive = false;
+        animator.SetBool("IsOverdrive", IsOverdrive);
     }
 }

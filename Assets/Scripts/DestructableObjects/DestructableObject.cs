@@ -35,7 +35,7 @@ public class DestructableObject : MonoBehaviour
         _rb = this.GetComponent<Rigidbody2D>();
         _col = this.GetComponent<Collider2D>();
         groundLayer = LayerMask.GetMask("Ground");
-        Debug.Log(groundLayer);
+        //Debug.Log(groundLayer);
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 

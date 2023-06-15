@@ -2616,7 +2616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de121f7a30e4a78489616828b35f2902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 2
+  maxHp: 20
   currentHp: 0
   jumpForce: 20
   attackForce: 1
@@ -2629,7 +2629,7 @@ MonoBehaviour:
   dashForce: 100
   dashDuration: 1
   dashSpeed: 200
-  requiredJumpStacksForDash: 3
+  requiredJumpStacksForDash: 5
   overdriveAttackForceIncreaseRate: 5
   overdriveAttackRangeIncreaseRate: 5
   overdriveAttackCoolTimeDecreaseRate: 5
@@ -2637,7 +2637,7 @@ MonoBehaviour:
   overdriveshieldForceIncreaseRate: 2
   overdriveshieldCoolTimeDecreaseRate: 2
   overdriveDuration: 5
-  requiredHitStacksForOverdrive: 5
+  requiredHitStacksForOverdrive: 3
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
