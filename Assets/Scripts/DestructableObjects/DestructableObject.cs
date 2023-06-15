@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class DestructableObject : MonoBehaviour
     //component variables
     private DestructableObject _destructableObject;
     private Rigidbody2D _rb;
+    private Collider2D _col;
     //시스템 조정 데이터
     [SerializeField]
     private int maxHp = 3;
@@ -19,16 +21,39 @@ public class DestructableObject : MonoBehaviour
     [SerializeField]
     private float resistence = 3.0f;
 
+    //reference variables
     private GameManager gameManager;
+    //derived variables
+    float distToGround;
+    private LayerMask groundLayer;
+    //flag variables
+    bool isBoomPlayed = false;
 
     void Awake()
     {
         _destructableObject = this.GetComponent<DestructableObject>();
         _rb = this.GetComponent<Rigidbody2D>();
+        _col = this.GetComponent<Collider2D>();
+        groundLayer = LayerMask.GetMask("Ground");
+        //Debug.Log(groundLayer);
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         currentHp = maxHp;
+        distToGround = _col.bounds.extents.y;
+    }
+
+    private void Update() {
+        CheckIsGrounded();
+    }
+
+    private void CheckIsGrounded()
+    {
+        if(!isBoomPlayed && IsGrounded()) {
+            Debug.Log("enemy is on ground");
+            isBoomPlayed = true;
+            Boom();
+        }
     }
 
     public void TakeDamage(int damage) {
@@ -62,7 +87,17 @@ public class DestructableObject : MonoBehaviour
 
     private void GetDestroyed() {
         gameManager.soundManager.PlaySE("snd_enemy_down");
+        gameManager.enemiesSlain++;
+        gameManager.uIController.scoreCounter.UpdateScore();
         Destroy(this.gameObject);
+    }
+
+    private void Boom() {
+        Debug.Log("Boom!");
+        gameManager.soundManager.PlaySE("snd_boom");
+    }
+    private bool IsGrounded() {
+        return Physics2D.Raycast(transform.position, Vector2.down, distToGround + 0.1f, groundLayer);
     }
 
 }

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public SoundManager soundManager;
     public UIController uIController;
     private GameObject backgroundPrefab;
+    public int enemiesSlain = 0;
     // Start is called before the first frame update
     void Awake()
     {
