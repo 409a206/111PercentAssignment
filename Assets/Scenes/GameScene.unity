@@ -3893,10 +3893,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72051cfbd592d4db914ab638d2c620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSourceEffects: []
-  audioSourceBGM: []
+  audioSourceEffects:
+  - {fileID: 1801510770}
+  audioSourceBGM:
+  - {fileID: 1801510772}
   playSoundName: []
   effectSounds:
+  - name: snd_dummy
+    clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
+  - name: snd_attack_left
+    clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
+  - name: snd_attack_right
+    clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
+  - name: snd_dummy
+    clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
+  - name: snd_dummy
+    clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
+  - name: snd_dummy
+    clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
   - name: snd_dummy
     clip: {fileID: 8300000, guid: 293be075b39e15943a0c37e213ba64e2, type: 3}
   BGMSounds: []
