@@ -87,6 +87,8 @@ public class DestructableObject : MonoBehaviour
 
     private void GetDestroyed() {
         gameManager.soundManager.PlaySE("snd_enemy_down");
+        gameManager.enemiesSlain++;
+        gameManager.uIController.scoreCounter.UpdateScore();
         Destroy(this.gameObject);
     }
 
