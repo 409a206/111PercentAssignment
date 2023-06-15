@@ -18,7 +18,7 @@ public class ComboManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ComboText.enabled = false;
     }
 
     // Update is called once per frame
@@ -28,10 +28,21 @@ public class ComboManager : MonoBehaviour
     }
 
     public void TriggerCombo() {
+        
+        if(ComboText.enabled == false) ComboText.enabled = true;
+
         comboAnimator.SetTrigger("Combo");
         ComboText.text = currentCombo + " Combo";
+        StartCoroutine(ComboCounterCoroutine());
     }
     public void ResetCombo() {
         currentCombo = 0;
+        StopCoroutine(ComboCounterCoroutine());
+    }
+
+    IEnumerator ComboCounterCoroutine() {
+        elapsedTime = 0f;
+        elapsedTime++;
+        yield return null;
     }
 }
