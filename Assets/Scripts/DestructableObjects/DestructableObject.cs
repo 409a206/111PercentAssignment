@@ -32,7 +32,7 @@ public class DestructableObject : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
-        Debug.Log("TakeDamage called");
+        //Debug.Log("TakeDamage called");
         currentHp -= damage;
         gameManager.comboManager.TriggerCombo();
 
@@ -48,14 +48,14 @@ public class DestructableObject : MonoBehaviour
     //쉴드로 인해 튕겨져 나감
     public void BounceOff(float shieldForce, out bool isCalled) {
         
-        Debug.Log("BounceOff called");
+        //Debug.Log("BounceOff called");
         
         isCalled = true;
 
         float bounceForce = (shieldForce - resistence) * 50f;
         if(bounceForce < 500f) bounceForce = 500f;
         
-        Debug.Log("bounceForce: " + bounceForce);
+        //Debug.Log("bounceForce: " + bounceForce);
 
         _rb.AddForce(Vector2.up * bounceForce);
     }

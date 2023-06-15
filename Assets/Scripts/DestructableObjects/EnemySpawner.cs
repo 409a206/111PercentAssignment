@@ -51,10 +51,10 @@ public class EnemySpawner : MonoBehaviour
             elapsedTime = 0f;
             int randomNumber = UnityEngine.Random.Range(0, enemyPrefabs.Count);
             appliedSpawnInterval = UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval);
-            Debug.Log("appliedSpawnInterval: " + appliedSpawnInterval);
+            //Debug.Log("appliedSpawnInterval: " + appliedSpawnInterval);
             GameObject instantiatedEnemy = Instantiate(enemyPrefabs[randomNumber]);
 
-            Debug.Log("Spawning enemy" + instantiatedEnemy.name);
+            //Debug.Log("Spawning enemy" + instantiatedEnemy.name);
             instantiatedEnemy.transform.position = this.transform.position;
         }
     }

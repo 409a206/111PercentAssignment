@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
         get{return canOverdrive;}
     }
     private bool IsOverdrive = false;
+    private bool hasTakenDamage = false;
 
     //derived data variables
     float distToGround;
@@ -141,6 +142,19 @@ public class PlayerController : MonoBehaviour
     private void Update() {
         CheckCurrentVelocity();
         CheckIsAir();
+        TryTakeDamage();
+    }
+
+    private void TryTakeDamage()
+    {
+        if(!hasTakenDamage) {
+            if(IsGrounded() && IsTouchingDestructableObject()) {
+                TakeDamage();
+                hasTakenDamage = !hasTakenDamage;
+            }
+        } else {
+            if(!IsGrounded() || !IsTouchingDestructableObject()) hasTakenDamage = false;
+        }
     }
 
     private void CheckIsAir()
@@ -215,7 +229,7 @@ public class PlayerController : MonoBehaviour
             currentJumpStacks++;
             gameManager.soundManager.PlaySE("snd_jump");
             CheckCanDash();
-            Debug.Log("CurrentJumpStacks: " + currentJumpStacks);
+            //Debug.Log("CurrentJumpStacks: " + currentJumpStacks);
         }
     }
 
@@ -270,7 +284,7 @@ public class PlayerController : MonoBehaviour
 
             Collider2D blockedEnemy = Physics2D.OverlapCircle(shieldPoint.position, shieldRange, destructableObjectLayer);
 
-            Debug.Log("player blocked " + blockedEnemy?.name);
+            //Debug.Log("player blocked " + blockedEnemy?.name);
             blockedEnemy?.transform.gameObject.GetComponent<DestructableObject>().BounceOff(shieldForce, out isBounceOffFunctionCalled);
             
             if(isBounceOffFunctionCalled) ShieldBounceOff();
@@ -283,7 +297,7 @@ public class PlayerController : MonoBehaviour
 
     //shield의 반작용으로 인해 아래로 튕겨지는 것을 구현한 함수
     private void ShieldBounceOff() {
-        Debug.Log("ShieldBounceOff Called");
+        //Debug.Log("ShieldBounceOff Called");
         _rb.AddForce(Vector2.down * (-shieldBounceOff));
         gameManager.soundManager.PlaySE("snd_shield_bounceOff");
     }
@@ -399,6 +413,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Too bad. Player died");
         animator.SetTrigger("Die");
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("DestructableObjects"));
         gameManager.GameOver();
     }
 }
