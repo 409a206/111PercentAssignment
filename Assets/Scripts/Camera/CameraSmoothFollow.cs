@@ -35,7 +35,7 @@ public class CameraSmoothFollow : MonoBehaviour
 
         //자동으로 min값 설정
         minY = backgroundBounds.max.y - camBottomRight.y;
-        Debug.Log("minY: " + minY);
+        //Debug.Log("minY: " + minY);
        
         target = GameObject.Find("Player");
 
