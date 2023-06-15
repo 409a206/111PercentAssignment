@@ -213,6 +213,7 @@ public class PlayerController : MonoBehaviour
         if(IsGrounded() && !IsTouchingDestructableObject()) {
             _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
             currentJumpStacks++;
+            gameManager.soundManager.PlaySE("snd_jump");
             CheckCanDash();
             Debug.Log("CurrentJumpStacks: " + currentJumpStacks);
         }
@@ -229,8 +230,12 @@ public class PlayerController : MonoBehaviour
         if(canAttack) {
             if(isAttackRight) {
                 animator.SetTrigger("AttackRight");
+                gameManager.soundManager.StopSE("snd_attack_left");
+                gameManager.soundManager.PlaySE("snd_attack_right");
             } else {
                 animator.SetTrigger("AttackLeft");
+                gameManager.soundManager.StopSE("snd_attack_right");
+                gameManager.soundManager.PlaySE("snd_attack_left");
             }
             isAttackRight = !isAttackRight;
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, destructableObjectLayer);
@@ -280,11 +285,13 @@ public class PlayerController : MonoBehaviour
     private void ShieldBounceOff() {
         Debug.Log("ShieldBounceOff Called");
         _rb.AddForce(Vector2.down * (-shieldBounceOff));
+        gameManager.soundManager.PlaySE("snd_shield_bounceOff");
     }
 
     public void Dash() {
         if(canDash) {
             Debug.Log("Dash!");
+            gameManager.soundManager.PlaySE("snd_dash");
             //_rb.velocity = new Vector2(_rb.velocity.x, dashForce);
             GameObject instantiatedDashPrefab = Instantiate(Resources.Load("Prefabs/Dash") as GameObject);
             instantiatedDashPrefab.transform.position = this.transform.position;
@@ -316,7 +323,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Destroy(dashPrefab);
-        
+        gameManager.soundManager.StopSE("snd_dash");
         gameManager.mainCamera.GetComponent<CameraSmoothFollow>().Target = this.gameObject;
         
 
@@ -324,6 +331,7 @@ public class PlayerController : MonoBehaviour
 
     public void Overdrive() {
         if(canOverdrive) {
+            gameManager.soundManager.PlaySE("snd_overdrive");
             Debug.Log("Overdrive!");
             StartCoroutine(OverDriveCoroutine());
             currentHitStacks = 0;

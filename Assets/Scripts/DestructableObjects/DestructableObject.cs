@@ -35,6 +35,11 @@ public class DestructableObject : MonoBehaviour
         Debug.Log("TakeDamage called");
         currentHp -= damage;
         gameManager.comboManager.TriggerCombo();
+
+        int randomInt = UnityEngine.Random.Range(1,3);
+
+        gameManager.soundManager.PlaySE("snd_hit_" + randomInt);
+
         if(currentHp <= 0) {
             GetDestroyed();
         }
@@ -56,6 +61,7 @@ public class DestructableObject : MonoBehaviour
     }
 
     private void GetDestroyed() {
+        gameManager.soundManager.PlaySE("snd_enemy_down");
         Destroy(this.gameObject);
     }
 
