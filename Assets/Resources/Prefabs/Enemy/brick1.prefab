@@ -792,7 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 3
-  resistence: 3
+  resistence: 1
 --- !u!1 &8506166673473014429
 GameObject:
   m_ObjectHideFlags: 0
