@@ -213,6 +213,7 @@ public class PlayerController : MonoBehaviour
         if(IsGrounded() && !IsTouchingDestructableObject()) {
             _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
             currentJumpStacks++;
+            gameManager.soundManager.PlaySE("snd_jump");
             CheckCanDash();
             Debug.Log("CurrentJumpStacks: " + currentJumpStacks);
         }
