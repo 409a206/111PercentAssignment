@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraSmoothFollow : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject target;
-
+    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.Find("Player");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
