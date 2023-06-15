@@ -416,6 +416,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Too bad. Player died");
         animator.SetTrigger("Die");
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("DestructableObjects"));
+        StopAllCoroutines();
         gameManager.GameOver();
     }
 }
