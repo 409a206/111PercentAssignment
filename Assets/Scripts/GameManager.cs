@@ -8,12 +8,14 @@ public class GameManager : MonoBehaviour
     //메인 카메라
     public Camera mainCamera;
     public PlayerController playerController;
+    public ComboManager comboManager;
     private GameObject backgroundPrefab;
     // Start is called before the first frame update
     void Awake()
     {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         playerController = GameObject.FindObjectOfType<PlayerController>();
+        comboManager = GameObject.FindObjectOfType<ComboManager>();
         backgroundPrefab = Resources.Load("Prefabs/Background") as GameObject;
     }
 

@@ -506,6 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   playerController: {fileID: 0}
+  comboManager: {fileID: 0}
 --- !u!1 &95729721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,7 +1696,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3271557119
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2906,7 +2907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ComboText: {fileID: 667379092}
-  comboDuration: 5
+  comboDuration: 10
   comboAnimator: {fileID: 667379094}
 --- !u!1 &1404776966
 GameObject:

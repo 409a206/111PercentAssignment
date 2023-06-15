@@ -8,8 +8,9 @@ public class ComboManager : MonoBehaviour
     private TMPro.TMP_Text ComboText;
     private int currentCombo;
 
+    [Tooltip("콤보 지속 시간")]
     [SerializeField]
-    private float comboDuration;
+    private float comboDuration = 10.0f;
     [SerializeField]
     private Animator comboAnimator;
     private float elapsedTime;
@@ -28,21 +29,28 @@ public class ComboManager : MonoBehaviour
     }
 
     public void TriggerCombo() {
-        
-        if(ComboText.enabled == false) ComboText.enabled = true;
 
+        if(ComboText.enabled == false) ComboText.enabled = true;
+        StopCoroutine(ComboCounterCoroutine());
+        currentCombo++;
         comboAnimator.SetTrigger("Combo");
         ComboText.text = currentCombo + " Combo";
         StartCoroutine(ComboCounterCoroutine());
     }
-    public void ResetCombo() {
+    private void ResetCombo() {
         currentCombo = 0;
-        StopCoroutine(ComboCounterCoroutine());
+        //StopCoroutine(ComboCounterCoroutine());
     }
 
     IEnumerator ComboCounterCoroutine() {
+
         elapsedTime = 0f;
-        elapsedTime++;
-        yield return null;
+        
+        while(elapsedTime < comboDuration) {
+            elapsedTime+= Time.deltaTime;
+            if(elapsedTime >= comboDuration) elapsedTime = comboDuration;
+            yield return null;
+        }
+        ResetCombo();
     }
 }

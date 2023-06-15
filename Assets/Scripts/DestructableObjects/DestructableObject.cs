@@ -19,10 +19,14 @@ public class DestructableObject : MonoBehaviour
     [SerializeField]
     private float resistence = 3.0f;
 
+    private GameManager gameManager;
+
     void Awake()
     {
         _destructableObject = this.GetComponent<DestructableObject>();
         _rb = this.GetComponent<Rigidbody2D>();
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         currentHp = maxHp;
     }
@@ -30,6 +34,7 @@ public class DestructableObject : MonoBehaviour
     public void TakeDamage(int damage) {
         Debug.Log("TakeDamage called");
         currentHp -= damage;
+        gameManager.comboManager.TriggerCombo();
         if(currentHp <= 0) {
             GetDestroyed();
         }
