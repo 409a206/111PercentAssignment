@@ -229,8 +229,12 @@ public class PlayerController : MonoBehaviour
         if(canAttack) {
             if(isAttackRight) {
                 animator.SetTrigger("AttackRight");
+                gameManager.soundManager.StopAllSE();
+                gameManager.soundManager.PlaySE("snd_dummy");
             } else {
                 animator.SetTrigger("AttackLeft");
+                gameManager.soundManager.StopAllSE();
+                gameManager.soundManager.PlaySE("snd_dummy");
             }
             isAttackRight = !isAttackRight;
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, destructableObjectLayer);

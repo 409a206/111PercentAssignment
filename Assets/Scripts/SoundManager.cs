@@ -9,7 +9,6 @@ public class Sound{
 }
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource _audioSource;
     static public SoundManager instance;
     public AudioSource[] audioSourceEffects;
     public AudioSource[] audioSourceBGM;
@@ -35,7 +34,6 @@ public class SoundManager : MonoBehaviour
     #endregion
     void Start()
     {
-        _audioSource = this.GetComponent<AudioSource>();
         playSoundName = new string[audioSourceEffects.Length + audioSourceBGM.Length];
         
     }

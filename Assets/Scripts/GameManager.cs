@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Camera mainCamera;
     public PlayerController playerController;
     public ComboManager comboManager;
+    public SoundManager soundManager;
     private GameObject backgroundPrefab;
     // Start is called before the first frame update
     void Awake()
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
         mainCamera = GameObject.FindObjectOfType<Camera>();
         playerController = GameObject.FindObjectOfType<PlayerController>();
         comboManager = GameObject.FindObjectOfType<ComboManager>();
+        soundManager = GameObject.FindObjectOfType<SoundManager>();
+
+
         backgroundPrefab = Resources.Load("Prefabs/Background") as GameObject;
     }
 
