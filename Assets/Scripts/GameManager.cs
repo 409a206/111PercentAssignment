@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,6 +42,15 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        
+        uIController.gameOverPanel.SetActive(true);
+        uIController.uiButtonPanel.SetActive(false);
+    }
+
+    public void QuitGame() {
+        Application.Quit();
+    }
+    public void ResetScene() {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("DestructableObjects"), false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

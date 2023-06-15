@@ -7,6 +7,8 @@ public class UIController : MonoBehaviour
 {
     public GameManager gameManager;
     public PlayerStatusPanel playerStatusPanel;
+    public GameObject uiButtonPanel;
+    public GameObject gameOverPanel;
     // Start is called before the first frame update
     void Start()
     {

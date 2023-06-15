@@ -1493,7 +1493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &520966306
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2279,8 +2279,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2b536433a6ca640896fae131ad78af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 77061028}
   playerStatusPanel: {fileID: 1020204367}
+  uiButtonPanel: {fileID: 634593526}
+  gameOverPanel: {fileID: 520966305}
 --- !u!1 &777707958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,7 +2521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de121f7a30e4a78489616828b35f2902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 30
+  maxHp: 3
   currentHp: 0
   jumpForce: 20
   attackForce: 1
@@ -2588,7 +2590,7 @@ GameObject:
   - component: {fileID: 956048685}
   - component: {fileID: 956048684}
   m_Layer: 5
-  m_Name: RetryButton (1)
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2658,7 +2660,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 956048685}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 77061028}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &956048685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3974,7 +3988,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1499081222}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 77061028}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ResetScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1499081222
 MonoBehaviour:
   m_ObjectHideFlags: 0
