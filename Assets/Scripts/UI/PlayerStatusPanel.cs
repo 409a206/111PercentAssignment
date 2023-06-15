@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class PlayerStatusPanel : MonoBehaviour
 {
-    public GameManager gameManager;
-    public PlayerStatusPanel playerStatusPanel;
+    public Image playerHpFillImage;
+    public Animator hpBarAnimator;
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
     }
 
     // Update is called once per frame

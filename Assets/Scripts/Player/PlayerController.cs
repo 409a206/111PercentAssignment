@@ -405,7 +405,9 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             Debug.Log("Player got hit! current Hp: " + currentHp);
+            gameManager.uIController.playerStatusPanel.playerHpFillImage.fillAmount = (float)currentHp / (float) maxHp;
             animator.SetTrigger("TakeDamage");
+            gameManager.uIController.playerStatusPanel.hpBarAnimator.SetTrigger("TakeDamage");
         }
     }
 

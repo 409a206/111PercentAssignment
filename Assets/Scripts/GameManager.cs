@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public PlayerController playerController;
     public ComboManager comboManager;
     public SoundManager soundManager;
+    public UIController uIController;
     private GameObject backgroundPrefab;
     // Start is called before the first frame update
     void Awake()
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
         playerController = GameObject.FindObjectOfType<PlayerController>();
         comboManager = GameObject.FindObjectOfType<ComboManager>();
         soundManager = GameObject.FindObjectOfType<SoundManager>();
+        uIController = GameObject.FindObjectOfType<UIController>();
 
 
         backgroundPrefab = Resources.Load("Prefabs/Background") as GameObject;
