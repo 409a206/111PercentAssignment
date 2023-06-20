@@ -44,8 +44,7 @@ public class CameraSmoothFollow : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
+    private void FixedUpdate() {
         FollowPlayer();   
     }
 
